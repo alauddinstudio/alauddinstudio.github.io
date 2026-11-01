@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://cozyidle.github.io/sitemap.xml
+Sitemap: https://alauddinstudio.com/sitemap.xml

@@ -1,4 +1,4 @@
-"""Builds every page of the site from data/games.json, and the Alauddin Studio home next door.
+"""Builds every page of alauddinstudio.com from data/games.json: the studio home, the games and the apps.
 
 Run after any change to data/games.json:  python tools/build.py
 """
@@ -6,7 +6,6 @@ import hashlib
 import html
 import json
 import pathlib
-import shutil
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DATA = json.loads((ROOT / "data" / "games.json").read_text(encoding="utf-8"))
@@ -14,9 +13,8 @@ SITE = DATA["site"]
 GAMES = DATA["games"]
 APPS = DATA["apps"]
 COMPANY = SITE["company"]
-BASE = "https://cozyidle.github.io/"
-STUDIO_URL = SITE["policy_base"]
-STUDIO_DIR = ROOT.parent / "alauddinahmed9282.github.io"
+BASE = SITE["policy_base"]
+STUDIO_URL = BASE
 # The studio home shows these games first; the rest keep their order after them.
 STUDIO_GAMES = sorted(GAMES, key=lambda g: SITE["studio_first"].index(g["slug"]) if g["slug"] in SITE["studio_first"] else len(GAMES))
 E = html.escape
@@ -65,7 +63,7 @@ def write_seo_files(folder, base, paths):
     print("built robots.txt and sitemap.xml for", base)
 
 
-def head(title, desc, image, url, prefix, color, extra=""):
+def head(title, desc, image, url, prefix, color, extra="", favicon="favicon.png"):
     return f"""<!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -82,7 +80,7 @@ def head(title, desc, image, url, prefix, color, extra=""):
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="canonical" href="{url}">
-  <link rel="icon" href="{prefix}assets/favicon.png">
+  <link rel="icon" href="{prefix}assets/{favicon}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
@@ -111,11 +109,11 @@ def badge(g):
     return f'<span class="badge {cls}"><span class="dot"></span>{label}</span>'
 
 
-def footer(prefix, links, name="cozyidle", mark="c", line="Small, gentle games made with love.", made=""):
+def footer(prefix, links, name="cozyidle", mark="c", line="Small, gentle games made with love.", made="", home=None):
     return f"""  <footer class="footer">
     <div class="wrap">
       <div class="foot-top">
-        <a class="brand" href="{prefix or './'}"><span class="brand-mark">{mark}</span><span>{name}</span></a>
+        <a class="brand" href="{home or prefix or './'}"><span class="brand-mark">{mark}</span><span>{name}</span></a>
         <p>{line}</p>
       </div>
       {links}{made}
@@ -129,24 +127,25 @@ def footer(prefix, links, name="cozyidle", mark="c", line="Small, gentle games m
 
 
 def build_home():
+    """The games page, /games/; the site's root is the studio home."""
     cards = []
     for i, g in enumerate(GAMES):
-        cards.append(f"""      <a class="game-card reveal" href="{g['slug']}/" style="--c1:{g['color']};--c2:{g['color2']};--d:{i * 0.07:.2f}s">
-        <div class="art"><img src="assets/icons/{g['slug']}.png" alt="{E(g['name'])} icon" loading="lazy" width="256" height="256">{badge(g)}</div>
+        cards.append(f"""      <a class="game-card reveal" href="../{g['slug']}/" style="--c1:{g['color']};--c2:{g['color2']};--d:{i * 0.07:.2f}s">
+        <div class="art"><img src="../assets/icons/{g['slug']}.png" alt="{E(g['name'])} icon" loading="lazy" width="256" height="256">{badge(g)}</div>
         <h3>{E(g['name'])}</h3>
         <p>{E(g['tagline'])}</p>
         <span class="go">Explore →</span>
       </a>""")
 
     collage = "".join(
-        f'<img class="ci ci{i}" src="assets/icons/{g["slug"]}.png" alt="{E(g["name"])}" width="256" height="256">'
+        f'<img class="ci ci{i}" src="../assets/icons/{g["slug"]}.png" alt="{E(g["name"])}" width="256" height="256">'
         for i, g in enumerate(GAMES[:6])
     )
     testing = [g for g in GAMES if g["status"] == "testing"]
     tester_band = ""
     if testing:
         chips = "".join(
-            f'<a class="chip" href="{g["slug"]}/#test" style="--c1:{g["color"]}"><img src="assets/icons/{g["slug"]}.png" alt="" width="28" height="28">{E(g["name"])}</a>'
+            f'<a class="chip" href="../{g["slug"]}/#test" style="--c1:{g["color"]}"><img src="../assets/icons/{g["slug"]}.png" alt="" width="28" height="28">{E(g["name"])}</a>'
             for g in testing
         )
         tester_band = f"""
@@ -163,11 +162,11 @@ def build_home():
         f'<div><b>{E(g["name"])}</b><a href="{policy(g, "privacy")}">Privacy</a><a href="{policy(g, "support")}">Support</a></div>'
         for g in GAMES
     )
-    page = f"""{head("cozyidle: little cozy games", "Small, gentle idle games with cute critters. Bees, bakeries, blossoms, fluffy sheep and more.", BASE + "assets/og.png", BASE, "", "#FFF6E6")}
+    page = f"""{head("cozyidle: little cozy games", "Small, gentle idle games with cute critters. Bees, bakeries, blossoms, fluffy sheep and more.", BASE + "assets/og-games.png", BASE + "games/", "../", "#FFF6E6", favicon="favicon-games.png")}
 <body data-particles='["🐝","🌸","🥐","🫧","❄️","🧶","🍃","✨"]'>
 {backdrop()}
   <div class="wrap">
-{topbar("", '<a href="#games">Games</a><a href="#why">About</a><a href="#contact">Contact</a>')}
+{topbar("./", '<a href="#games">Games</a><a href="#why">About</a><a href="#contact">Contact</a>')}
 
     <section class="hero home-hero">
       <div class="hero-text">
@@ -207,9 +206,11 @@ def build_home():
       <a class="btn" href="mailto:{SITE['email']}">Email us</a>
     </section>
   </div>
-{footer("", '<div class="foot-links">' + links + '</div>')}"""
-    (ROOT / "index.html").write_text(page, encoding="utf-8")
-    print("built index.html")
+{footer("../", '<div class="foot-links">' + links + '</div>', home="./")}"""
+    out = ROOT / "games" / "index.html"
+    out.parent.mkdir(exist_ok=True)
+    out.write_text(page, encoding="utf-8")
+    print("built", out.relative_to(ROOT))
 
 
 def build_game(g):
@@ -313,11 +314,11 @@ def build_game(g):
         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
     })
 
-    page = f"""{head(g["title"], desc, BASE + "assets/icons/" + slug + ".png", BASE + slug + "/", "../", g["color"], style)}
+    page = f"""{head(g["title"], desc, BASE + "assets/icons/" + slug + ".png", BASE + slug + "/", "../", g["color"], style, "favicon-games.png")}
 <body data-game="{slug}" data-status="{status}" data-particles='{particles}'>
 {backdrop()}
   <div class="wrap">
-{topbar("../", '<a href="../#games">All games</a>')}
+{topbar("../games/", '<a href="../games/#games">All games</a>')}
 {inapp}
     <section class="hero game-hero">
       <div class="hero-text">
@@ -339,7 +340,7 @@ def build_game(g):
       <div class="minis">{more_games}</div>
     </section>
   </div>
-{footer("../", links)}"""
+{footer("../", links, home="../games/")}"""
     out = ROOT / slug / "index.html"
     out.parent.mkdir(exist_ok=True)
     out.write_text(page, encoding="utf-8")
@@ -362,18 +363,9 @@ def studio_card(g, href, icon, i, highlights):
 
 
 def build_studio():
-    """The company home page, in the Pages repo next to this one."""
-    if not STUDIO_DIR.is_dir():
-        print("skipped the studio home:", STUDIO_DIR, "not found")
-        return
-    (STUDIO_DIR / "assets" / "icons").mkdir(parents=True, exist_ok=True)
-    for f in ("style.css", "app.js"):
-        shutil.copy(ROOT / "assets" / f, STUDIO_DIR / "assets" / f)
-    for g in GAMES:
-        shutil.copy(ROOT / "assets" / "icons" / f"{g['slug']}.png", STUDIO_DIR / "assets" / "icons")
-
+    """The company home page, the site's root."""
     game_cards = [
-        studio_card(g, f"{BASE}{g['slug']}/", f"assets/icons/{g['slug']}.png", i, [f"{f[0]} {f[1]}" for f in g["features"][:3]])
+        studio_card(g, f"{g['slug']}/", f"assets/icons/{g['slug']}.png", i, [f"{f[0]} {f[1]}" for f in g["features"][:3]])
         for i, g in enumerate(STUDIO_GAMES)
     ]
     app_cards = [studio_card(a, f"{a['slug']}/", f"{a['slug']}/icon.png", i, a["highlights"]) for i, a in enumerate(APPS)]
@@ -388,7 +380,7 @@ def build_studio():
         f'<div><b>{E(a["name"])}</b><a href="{a["slug"]}/privacy.html">Privacy</a><a href="{a["slug"]}/">Support</a></div>'
         for a in APPS
     )
-    game_links = "".join(f'<a href="{BASE}{g["slug"]}/">{E(g["name"])}</a>' for g in STUDIO_GAMES)
+    game_links = "".join(f'<a href="{g["slug"]}/">{E(g["name"])}</a>' for g in STUDIO_GAMES)
     app_links = "".join(f'<a href="{a["slug"]}/">{E(a["name"])}</a>' for a in APPS)
     social = "".join(f'<a href="{url}" target="_blank" rel="noopener">{E(label)}</a>' for label, url in SITE["social"]["links"])
     links = f"""<div class="foot-cols">
@@ -401,7 +393,7 @@ def build_studio():
     desc = "Alauddin Studio makes cozy games and useful apps for Android and iPhone."
     extra = '\n  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">' + ld({
         "@context": "https://schema.org", "@type": "Organization", "name": COMPANY, "url": STUDIO_URL,
-        "logo": STUDIO_URL + "assets/logo-512.png", "email": SITE["email"], "sameAs": [BASE],
+        "logo": STUDIO_URL + "assets/logo-512.png", "email": SITE["email"],
     })
     page = f"""{head(COMPANY + ": cozy games and useful apps", desc, STUDIO_URL + "assets/og.png", STUDIO_URL, "", "#EEF5FF", extra)}
 <body class="studio">
@@ -454,9 +446,8 @@ def build_studio():
     </section>
   </div>
 {footer("", links, COMPANY, studio_mark(), "Little ideas, a touch of magic.", f'<p class="made">Made in Bangladesh by {COMPANY}</p>')}"""
-    (STUDIO_DIR / "index.html").write_text(page, encoding="utf-8")
-    print("built studio index.html")
-    write_seo_files(STUDIO_DIR, STUDIO_URL, [""] + [a["slug"] + "/" for a in APPS])
+    (ROOT / "index.html").write_text(page, encoding="utf-8")
+    print("built index.html")
 
 
 def build_app_page(a):
@@ -554,7 +545,7 @@ def build_app_page(a):
     </section>
   </div>
 {footer(prefix, links, COMPANY, studio_mark(prefix), "Little ideas, a touch of magic.", made)}"""
-    for root in (STUDIO_DIR, ROOT.parent / "alauddin-apps" / "website"):
+    for root in (ROOT, ROOT.parent / "alauddin-apps" / "website"):
         out = root / slug / "index.html"
         if out.exists():
             out.write_text(page, encoding="utf-8", newline="\n")
@@ -564,7 +555,7 @@ def build_app_page(a):
 build_home()
 for game in GAMES:
     build_game(game)
-write_seo_files(ROOT, BASE, [""] + [g["slug"] + "/" for g in GAMES])
 build_studio()
 for app in APPS:
     build_app_page(app)
+write_seo_files(ROOT, BASE, ["", "games/"] + [g["slug"] + "/" for g in GAMES + APPS])
