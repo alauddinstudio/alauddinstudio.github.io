@@ -50,6 +50,20 @@ def policy(g, page):
     return SITE["policy_base"] + g["policy"] + page + ".html"
 
 
+def ld(data):
+    return f'\n  <script type="application/ld+json">{json.dumps(data, ensure_ascii=False)}</script>'
+
+
+def write_seo_files(folder, base, paths):
+    (folder / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {base}sitemap.xml\n", encoding="utf-8", newline="\n")
+    urls = "".join(f"  <url><loc>{base}{p}</loc></url>\n" for p in paths)
+    (folder / "sitemap.xml").write_text(
+        f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n',
+        encoding="utf-8", newline="\n",
+    )
+    print("built robots.txt and sitemap.xml for", base)
+
+
 def head(title, desc, image, url, prefix, color, extra=""):
     return f"""<!doctype html>
 <html lang="en" class="no-js">
@@ -113,7 +127,7 @@ def build_home():
     cards = []
     for i, g in enumerate(GAMES):
         cards.append(f"""      <a class="game-card reveal" href="{g['slug']}/" style="--c1:{g['color']};--c2:{g['color2']};--d:{i * 0.07:.2f}s">
-        <div class="art"><img src="assets/icons/{g['slug']}.png" alt="" loading="lazy" width="256" height="256">{badge(g)}</div>
+        <div class="art"><img src="assets/icons/{g['slug']}.png" alt="{E(g['name'])} icon" loading="lazy" width="256" height="256">{badge(g)}</div>
         <h3>{E(g['name'])}</h3>
         <p>{E(g['tagline'])}</p>
         <span class="go">Explore →</span>
@@ -287,6 +301,12 @@ def build_game(g):
     particles = json.dumps(g["particles"], ensure_ascii=False)
     style = f'\n  <style>:root {{ --c1: {g["color"]}; --c2: {g["color2"]}; }}</style>'
     desc = g["tagline"] + (" Join the closed test on Google Play." if status == "testing" else "")
+    style += ld({
+        "@context": "https://schema.org", "@type": "VideoGame", "name": g["title"], "description": g["intro"],
+        "url": BASE + slug + "/", "image": BASE + "assets/icons/" + slug + ".png", "applicationCategory": "Game",
+        "operatingSystem": "Android, iOS", "publisher": {"@type": "Organization", "name": COMPANY, "url": STUDIO_URL},
+        "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+    })
 
     page = f"""{head(g["title"], desc, BASE + "assets/icons/" + slug + ".png", BASE + slug + "/", "../", g["color"], style)}
 <body data-game="{slug}" data-status="{status}" data-particles='{particles}'>
@@ -323,7 +343,7 @@ def build_game(g):
 
 def studio_card(g, href, icon, i):
     return f"""      <a class="game-card reveal" href="{href}" style="--c1:{g['color']};--c2:{g['color2']};--d:{i * 0.07:.2f}s">
-        <div class="art"><img src="{icon}" alt="" loading="lazy" width="256" height="256">{badge(g)}</div>
+        <div class="art"><img src="{icon}" alt="{E(g['name'])} icon" loading="lazy" width="256" height="256">{badge(g)}</div>
         <h3>{E(g['name'])}</h3>
         <p>{E(g['tagline'])}</p>
         <span class="go">Explore →</span>
@@ -352,12 +372,11 @@ def build_studio():
         f'<div><b>{E(a["name"])}</b><a href="{a["slug"]}/privacy.html">Privacy</a><a href="{a["slug"]}/">Support</a></div>'
         for a in APPS
     )
-    org = json.dumps({
-        "@context": "https://schema.org", "@type": "Organization", "name": COMPANY, "url": STUDIO_URL,
-        "logo": STUDIO_URL + "assets/favicon.png", "email": SITE["email"],
-    })
     desc = "Alauddin Studio makes cozy games and useful apps for Android and iPhone."
-    extra = f'\n  <script type="application/ld+json">{org}</script>'
+    extra = ld({
+        "@context": "https://schema.org", "@type": "Organization", "name": COMPANY, "url": STUDIO_URL,
+        "logo": STUDIO_URL + "assets/favicon.png", "email": SITE["email"], "sameAs": [BASE],
+    })
     page = f"""{head(COMPANY + ": cozy games and useful apps", desc, STUDIO_URL + "assets/og.png", STUDIO_URL, "", "#EEF5FF", extra)}
 <body class="studio">
 {backdrop()}
@@ -411,10 +430,30 @@ def build_studio():
 {footer("", '<div class="foot-links">' + links + '</div>', COMPANY, "A", "Cozy games and useful apps.")}"""
     (STUDIO_DIR / "index.html").write_text(page, encoding="utf-8")
     print("built studio index.html")
+    write_seo_files(STUDIO_DIR, STUDIO_URL, [""] + [a["slug"] + "/" for a in APPS])
 
 
-def build_app_store_row(a):
-    """Only the store row of an app page is built; the rest of the page is written by hand."""
+def app_seo(a):
+    url = f"{STUDIO_URL}{a['slug']}/"
+    title, desc, icon = E(a["title"]), E(a["description"]), url + "icon.png"
+    return f"""<!-- seo -->
+<link rel="canonical" href="{url}">
+<link rel="icon" href="../assets/favicon.png">
+<meta name="theme-color" content="{a['color']}">
+<meta property="og:title" content="{title}">
+<meta property="og:description" content="{desc}">
+<meta property="og:image" content="{icon}">
+<meta property="og:url" content="{url}">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">""" + ld({
+        "@context": "https://schema.org", "@type": "MobileApplication", "name": a["title"], "description": a["description"],
+        "url": url, "image": icon, "applicationCategory": a["category"], "operatingSystem": "Android, iOS",
+        "publisher": {"@type": "Organization", "name": COMPANY, "url": STUDIO_URL},
+    }).replace("\n  ", "\n") + "\n<!-- /seo -->"
+
+
+def build_app_page(a):
+    """Only the store row and the SEO tags of an app page are built; the rest is written by hand."""
     if a["status"] == "live":
         row = f'<a class="store" href="{play_url(a)}" target="_blank" rel="noopener">{PLAY_ICON} Get it on Google Play</a>'
     else:
@@ -422,14 +461,17 @@ def build_app_store_row(a):
     for root in (STUDIO_DIR, ROOT.parent / "alauddin-apps" / "website"):
         out = root / a["slug"] / "index.html"
         if out.exists():
-            text = out.read_text(encoding="utf-8")
-            out.write_text(re.sub(r"<!-- store -->.*?<!-- /store -->", lambda m: f"<!-- store -->{row}<!-- /store -->", text, flags=re.S), encoding="utf-8")
+            text = out.read_bytes().decode("utf-8")
+            text = re.sub(r"<!-- store -->.*?<!-- /store -->", lambda m: f"<!-- store -->{row}<!-- /store -->", text, flags=re.S)
+            text = re.sub(r"<!-- seo -->.*?<!-- /seo -->", lambda m: app_seo(a), text, flags=re.S)
+            out.write_bytes(text.encode("utf-8"))
             print("built", out)
 
 
 build_home()
 for game in GAMES:
     build_game(game)
+write_seo_files(ROOT, BASE, [""] + [g["slug"] + "/" for g in GAMES])
 build_studio()
 for app in APPS:
-    build_app_store_row(app)
+    build_app_page(app)
