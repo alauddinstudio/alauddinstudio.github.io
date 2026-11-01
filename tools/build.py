@@ -18,6 +18,9 @@ COMPANY = SITE["company"]
 BASE = "https://cozyidle.github.io/"
 STUDIO_URL = SITE["policy_base"]
 STUDIO_DIR = ROOT.parent / "alauddinahmed9282.github.io"
+STUDIO_MARK = '<img src="assets/logo-icon.svg" alt="" width="36" height="36">'
+# The studio home shows these games first; the rest keep their order after them.
+STUDIO_GAMES = sorted(GAMES, key=lambda g: SITE["studio_first"].index(g["slug"]) if g["slug"] in SITE["studio_first"] else len(GAMES))
 E = html.escape
 # Changes whenever the CSS/JS changes, so browsers never mix a new page with an old cached file.
 VER = hashlib.md5(b"".join((ROOT / "assets" / f).read_bytes() for f in ("style.css", "app.js"))).hexdigest()[:8]
@@ -361,27 +364,27 @@ def build_studio():
     for g in GAMES:
         shutil.copy(ROOT / "assets" / "icons" / f"{g['slug']}.png", STUDIO_DIR / "assets" / "icons")
 
-    game_cards = [studio_card(g, f"{BASE}{g['slug']}/", f"assets/icons/{g['slug']}.png", i) for i, g in enumerate(GAMES)]
+    game_cards = [studio_card(g, f"{BASE}{g['slug']}/", f"assets/icons/{g['slug']}.png", i) for i, g in enumerate(STUDIO_GAMES)]
     app_cards = [studio_card(a, f"{a['slug']}/", f"{a['slug']}/icon.png", i) for i, a in enumerate(APPS)]
     icons = [(f"assets/icons/{g['slug']}.png", g["name"]) for g in GAMES[:4]] + [(f"{a['slug']}/icon.png", a["name"]) for a in APPS[:2]]
     collage = "".join(f'<img class="ci ci{i}" src="{src}" alt="{E(name)}" width="256" height="256">' for i, (src, name) in enumerate(icons))
     links = "".join(
         f'<div><b>{E(g["name"])}</b><a href="{g["policy"]}privacy.html">Privacy</a><a href="{g["policy"]}support.html">Support</a></div>'
-        for g in GAMES
+        for g in STUDIO_GAMES
     ) + "".join(
         f'<div><b>{E(a["name"])}</b><a href="{a["slug"]}/privacy.html">Privacy</a><a href="{a["slug"]}/">Support</a></div>'
         for a in APPS
     )
     desc = "Alauddin Studio makes cozy games and useful apps for Android and iPhone."
-    extra = ld({
+    extra = '\n  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">' + ld({
         "@context": "https://schema.org", "@type": "Organization", "name": COMPANY, "url": STUDIO_URL,
-        "logo": STUDIO_URL + "assets/favicon.png", "email": SITE["email"], "sameAs": [BASE],
+        "logo": STUDIO_URL + "assets/logo-512.png", "email": SITE["email"], "sameAs": [BASE],
     })
     page = f"""{head(COMPANY + ": cozy games and useful apps", desc, STUDIO_URL + "assets/og.png", STUDIO_URL, "", "#EEF5FF", extra)}
 <body class="studio">
 {backdrop()}
   <div class="wrap">
-{topbar("", '<a href="#games">Games</a><a href="#apps">Apps</a><a href="#contact">Contact</a>', COMPANY, "A")}
+{topbar("", '<a href="#games">Games</a><a href="#apps">Apps</a><a href="#contact">Contact</a>', COMPANY, STUDIO_MARK)}
 
     <section class="hero home-hero studio-hero">
       <div class="hero-text">
@@ -427,7 +430,7 @@ def build_studio():
       <a class="btn" href="mailto:{SITE['email']}">Email us</a>
     </section>
   </div>
-{footer("", '<div class="foot-links">' + links + '</div>', COMPANY, "A", "Cozy games and useful apps.")}"""
+{footer("", '<div class="foot-links">' + links + '</div>', COMPANY, STUDIO_MARK, "Cozy games and useful apps.")}"""
     (STUDIO_DIR / "index.html").write_text(page, encoding="utf-8")
     print("built studio index.html")
     write_seo_files(STUDIO_DIR, STUDIO_URL, [""] + [a["slug"] + "/" for a in APPS])
