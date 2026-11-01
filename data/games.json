@@ -257,6 +257,9 @@
     {
       "slug": "leafcure",
       "name": "Leafcure",
+    "title": "Leafcure: Plant Disease Doctor",
+    "description": "Leafcure is an AI plant doctor. Snap a sick leaf to identify the plant, find the disease or pest, and get step-by-step treatment.",
+    "category": "LifestyleApplication",
       "pkg": "com.alauddin.plantdoctor",
       "status": "soon",
       "tagline": "Your AI plant doctor. Snap a sick leaf to find the problem and get step-by-step treatment.",
@@ -266,6 +269,9 @@
     {
       "slug": "paincast",
       "name": "Paincast",
+    "title": "Paincast: Barometric Pressure Alerts & Pain Diary",
+    "description": "Paincast warns you 24–48 hours before big air pressure changes and keeps a simple pain diary, so you can plan around the weather.",
+    "category": "WeatherApplication",
       "pkg": "com.alauddin.paincast",
       "status": "soon",
       "tagline": "Air pressure alerts 24–48 hours ahead, with a simple pain diary that stays on your phone.",
