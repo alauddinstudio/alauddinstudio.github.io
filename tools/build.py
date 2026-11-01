@@ -6,7 +6,6 @@ import hashlib
 import html
 import json
 import pathlib
-import re
 import shutil
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -18,7 +17,6 @@ COMPANY = SITE["company"]
 BASE = "https://cozyidle.github.io/"
 STUDIO_URL = SITE["policy_base"]
 STUDIO_DIR = ROOT.parent / "alauddinahmed9282.github.io"
-STUDIO_MARK = '<img src="assets/logo-icon.svg" alt="" width="36" height="36">'
 # The studio home shows these games first; the rest keep their order after them.
 STUDIO_GAMES = sorted(GAMES, key=lambda g: SITE["studio_first"].index(g["slug"]) if g["slug"] in SITE["studio_first"] else len(GAMES))
 E = html.escape
@@ -95,6 +93,10 @@ def head(title, desc, image, url, prefix, color, extra=""):
 def backdrop():
     return """  <div class="sky" aria-hidden="true"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
   <div class="particles" aria-hidden="true"></div>"""
+
+
+def studio_mark(prefix=""):
+    return f'<img src="{prefix}assets/logo-icon.svg" alt="" width="36" height="36">'
 
 
 def topbar(prefix, right, name="cozyidle", mark="c"):
@@ -405,7 +407,7 @@ def build_studio():
 <body class="studio">
 {backdrop()}
   <div class="wrap">
-{topbar("", '<a href="#games">Games</a><a href="#apps">Apps</a><a href="#contact">Contact</a>', COMPANY, STUDIO_MARK)}
+{topbar("", '<a href="#games">Games</a><a href="#apps">Apps</a><a href="#contact">Contact</a>', COMPANY, studio_mark())}
 
     <section class="hero home-hero studio-hero">
       <div class="hero-text">
@@ -451,44 +453,100 @@ def build_studio():
       <a class="btn" href="mailto:{SITE['email']}">Email us</a>
     </section>
   </div>
-{footer("", links, COMPANY, STUDIO_MARK, "Little ideas, a touch of magic.", f'<p class="made">Made in Bangladesh by {COMPANY}</p>')}"""
+{footer("", links, COMPANY, studio_mark(), "Little ideas, a touch of magic.", f'<p class="made">Made in Bangladesh by {COMPANY}</p>')}"""
     (STUDIO_DIR / "index.html").write_text(page, encoding="utf-8")
     print("built studio index.html")
     write_seo_files(STUDIO_DIR, STUDIO_URL, [""] + [a["slug"] + "/" for a in APPS])
 
 
-def app_seo(a):
-    url = f"{STUDIO_URL}{a['slug']}/"
-    title, desc, icon = E(a["title"]), E(a["description"]), url + "icon.png"
-    return f"""<!-- seo -->
-<link rel="canonical" href="{url}">
-<link rel="icon" href="../assets/favicon.png">
-<meta name="theme-color" content="{a['color']}">
-<meta property="og:title" content="{title}">
-<meta property="og:description" content="{desc}">
-<meta property="og:image" content="{icon}">
-<meta property="og:url" content="{url}">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">""" + ld({
-        "@context": "https://schema.org", "@type": "MobileApplication", "name": a["title"], "description": a["description"],
-        "url": url, "image": icon, "applicationCategory": a["category"], "operatingSystem": "Android, iOS",
-        "publisher": {"@type": "Organization", "name": COMPANY, "url": STUDIO_URL},
-    }).replace("\n  ", "\n") + "\n<!-- /seo -->"
-
-
 def build_app_page(a):
-    """Only the store row and the SEO tags of an app page are built; the rest is written by hand."""
+    """An app's page, in the same style as a game page. It is also the Support URL in the stores, so the help stays on it."""
+    slug = a["slug"]
+    url = f"{STUDIO_URL}{slug}/"
+    prefix = "../"
     if a["status"] == "live":
-        row = f'<a class="store" href="{play_url(a)}" target="_blank" rel="noopener">{PLAY_ICON} Get it on Google Play</a>'
+        cta = f'<a class="btn" href="{play_url(a)}" target="_blank" rel="noopener">{PLAY_ICON} Get it on Google Play</a>'
     else:
-        row = f'<span class="store off">{STATUS[a["status"]][0]}</span>'
+        cta = '<span class="btn ghost disabled">🌱 Coming soon</span>'
+    features = "".join(
+        f'<div class="feat reveal" style="--d:{i * 0.07:.2f}s"><span class="feat-ic">{ic}</span><b>{E(t)}</b><span>{E(x)}</span></div>'
+        for i, (ic, t, x) in enumerate(a["features"])
+    )
+    steps = "".join(
+        f'<div class="feat reveal" style="--d:{i * 0.07:.2f}s"><span class="feat-ic step-no">{i + 1}</span><b>{E(t)}</b><span>{E(x)}</span></div>'
+        for i, (t, x) in enumerate(a["steps"])
+    )
+    faq = "".join(f'<details class="faq"><summary>{E(q)}</summary><p>{answer}</p></details>' for q, answer in a["faq"])
+    others = "".join(
+        f'<a class="mini" href="../{o["slug"]}/" style="--c1:{o["color"]}"><img src="../{o["slug"]}/icon.png" alt="" loading="lazy" width="256" height="256"><span>{E(o["name"])}</span></a>'
+        for o in APPS if o is not a
+    )
+    home = f'<a class="mini" href="../" style="--c1:#2B2A6B"><img src="../assets/logo-512.png" alt="" loading="lazy" width="256" height="256"><span>All games and apps</span></a>'
+    links = (
+        f'<div class="foot-links one"><div><b>{E(a["name"])}</b><a href="privacy.html">Privacy Policy</a><a href="#help">Support</a>'
+        '<a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms of Use</a></div></div>'
+    )
+    made = f'<p class="made">Made in Bangladesh by {COMPANY}</p>'
+    if a.get("credit"):
+        made += f'<p class="credit">{E(a["credit"])}</p>'
+    particles = json.dumps(a["particles"], ensure_ascii=False)
+    style = f"""
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <style>:root {{ --c1: {a['color']}; --c2: {a['color2']}; --bg: {a['bg']}; }}</style>""" + ld({
+        "@context": "https://schema.org", "@type": "MobileApplication", "name": a["title"], "description": a["description"],
+        "url": url, "image": url + "icon.png", "applicationCategory": a["category"], "operatingSystem": "Android, iOS",
+        "publisher": {"@type": "Organization", "name": COMPANY, "url": STUDIO_URL},
+    })
+
+    page = f"""{head(a["title"], a["description"], url + "icon.png", url, prefix, a["color"], style)}
+<body class="app-page" data-particles='{particles}'>
+{backdrop()}
+  <div class="wrap">
+{topbar(prefix, '<a href="#features">Features</a><a href="#help">Help</a><a href="#contact">Contact</a>', COMPANY, studio_mark(prefix))}
+
+    <section class="hero game-hero">
+      <div class="hero-text">
+        <div class="title-row"><img class="app-icon" src="icon.png" alt="" width="256" height="256">{badge(a)}</div>
+        <h1>{E(a['name'])}</h1>
+        <p class="app-tag">{E(a['tag'])}</p>
+        <p>{E(a['lead'])}</p>
+        <div class="cta-row">{cta}<a class="btn ghost" href="#features">See what it does</a></div>
+      </div>
+      <div class="hero-visual"><div class="icon-stage big"><div class="ring"></div><img src="icon.png" alt="{E(a['name'])} icon" width="256" height="256"></div></div>
+    </section>
+
+    <section class="about" id="features">
+      <div class="section-head reveal"><span class="eyebrow">What it does</span><h2>Everything in one simple app</h2></div>
+      <div class="feats">{features}</div>
+    </section>
+
+    <section class="about" id="how">
+      <div class="section-head reveal"><span class="eyebrow">How it works</span><h2>Three easy steps</h2></div>
+      <div class="feats three">{steps}</div>
+    </section>
+
+    <section class="about" id="help">
+      <div class="section-head reveal"><span class="eyebrow">Help</span><h2>Questions and answers</h2></div>
+      <div class="faqs">{faq}</div>
+    </section>
+
+    <section class="contact reveal" id="contact">
+      <span class="why-ic big">💌</span>
+      <h2>Contact us</h2>
+      <p>Questions, bugs or ideas? We usually reply within 2 days.</p>
+      <a class="btn" href="mailto:{SITE['email']}?subject={E(a['name'])}">Email us</a>
+    </section>
+
+    <section class="more">
+      <div class="section-head reveal"><span class="eyebrow">More from {COMPANY}</span><h2>Keep exploring</h2></div>
+      <div class="minis">{others}{home}</div>
+    </section>
+  </div>
+{footer(prefix, links, COMPANY, studio_mark(prefix), "Little ideas, a touch of magic.", made)}"""
     for root in (STUDIO_DIR, ROOT.parent / "alauddin-apps" / "website"):
-        out = root / a["slug"] / "index.html"
+        out = root / slug / "index.html"
         if out.exists():
-            text = out.read_bytes().decode("utf-8")
-            text = re.sub(r"<!-- store -->.*?<!-- /store -->", lambda m: f"<!-- store -->{row}<!-- /store -->", text, flags=re.S)
-            text = re.sub(r"<!-- seo -->.*?<!-- /seo -->", lambda m: app_seo(a), text, flags=re.S)
-            out.write_bytes(text.encode("utf-8"))
+            out.write_text(page, encoding="utf-8", newline="\n")
             print("built", out)
 
 
