@@ -1,6 +1,7 @@
 {
-  "_help": "status: testing | live | soon. After editing run: python tools/build.py",
+  "_help": "status: testing | live | soon. After editing run: python tools/build.py. It also builds the Alauddin Studio home from games and apps.",
   "site": {
+    "company": "Alauddin Studio",
     "email": "alauddinahmed7888@gmail.com",
     "policy_base": "https://alauddinahmed9282.github.io/"
   },
@@ -250,6 +251,26 @@
         "✨"
       ],
       "video": true
+    }
+  ],
+  "apps": [
+    {
+      "slug": "leafcure",
+      "name": "Leafcure",
+      "pkg": "com.alauddin.plantdoctor",
+      "status": "soon",
+      "tagline": "Your AI plant doctor. Snap a sick leaf to find the problem and get step-by-step treatment.",
+      "color": "#1F5C45",
+      "color2": "#A9D3B6"
+    },
+    {
+      "slug": "paincast",
+      "name": "Paincast",
+      "pkg": "com.alauddin.paincast",
+      "status": "soon",
+      "tagline": "Air pressure alerts 24–48 hours ahead, with a simple pain diary that stays on your phone.",
+      "color": "#4B4A9E",
+      "color2": "#B9B3F0"
     }
   ]
 }

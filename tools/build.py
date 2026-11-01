@@ -1,4 +1,4 @@
-"""Builds every page of the site from data/games.json.
+"""Builds every page of the site from data/games.json, and the Alauddin Studio home next door.
 
 Run after any change to data/games.json:  python tools/build.py
 """
@@ -6,12 +6,18 @@ import hashlib
 import html
 import json
 import pathlib
+import re
+import shutil
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DATA = json.loads((ROOT / "data" / "games.json").read_text(encoding="utf-8"))
 SITE = DATA["site"]
 GAMES = DATA["games"]
+APPS = DATA["apps"]
+COMPANY = SITE["company"]
 BASE = "https://cozyidle.github.io/"
+STUDIO_URL = SITE["policy_base"]
+STUDIO_DIR = ROOT.parent / "alauddinahmed9282.github.io"
 E = html.escape
 # Changes whenever the CSS/JS changes, so browsers never mix a new page with an old cached file.
 VER = hashlib.md5(b"".join((ROOT / "assets" / f).read_bytes() for f in ("style.css", "app.js"))).hexdigest()[:8]
@@ -74,9 +80,9 @@ def backdrop():
   <div class="particles" aria-hidden="true"></div>"""
 
 
-def topbar(prefix, right):
+def topbar(prefix, right, name="cozyidle", mark="c"):
     return f"""    <header class="topbar">
-      <a class="brand" href="{prefix or './'}"><span class="brand-mark">c</span><span>cozyidle</span></a>
+      <a class="brand" href="{prefix or './'}"><span class="brand-mark">{mark}</span><span>{name}</span></a>
       <nav class="nav">{right}</nav>
     </header>"""
 
@@ -86,15 +92,15 @@ def badge(g):
     return f'<span class="badge {cls}"><span class="dot"></span>{label}</span>'
 
 
-def footer(prefix, links):
+def footer(prefix, links, name="cozyidle", mark="c", line="Small, gentle games made with love."):
     return f"""  <footer class="footer">
     <div class="wrap">
       <div class="foot-top">
-        <a class="brand" href="{prefix or './'}"><span class="brand-mark">c</span><span>cozyidle</span></a>
-        <p>Small, gentle games made with love.</p>
+        <a class="brand" href="{prefix or './'}"><span class="brand-mark">{mark}</span><span>{name}</span></a>
+        <p>{line}</p>
       </div>
       {links}
-      <p class="copy">© 2026 cozyidle · <a href="mailto:{SITE['email']}">{SITE['email']}</a></p>
+      <p class="copy">© 2026 <a href="{STUDIO_URL}">{COMPANY}</a> · <a href="mailto:{SITE['email']}">{SITE['email']}</a></p>
     </div>
   </footer>
   <script src="{prefix}assets/app.js?v={VER}"></script>
@@ -115,7 +121,7 @@ def build_home():
 
     collage = "".join(
         f'<img class="ci ci{i}" src="assets/icons/{g["slug"]}.png" alt="{E(g["name"])}" width="256" height="256">'
-        for i, g in enumerate(GAMES)
+        for i, g in enumerate(GAMES[:6])
     )
     testing = [g for g in GAMES if g["status"] == "testing"]
     tester_band = ""
@@ -315,6 +321,115 @@ def build_game(g):
     print("built", out.relative_to(ROOT))
 
 
+def studio_card(g, href, icon, i):
+    return f"""      <a class="game-card reveal" href="{href}" style="--c1:{g['color']};--c2:{g['color2']};--d:{i * 0.07:.2f}s">
+        <div class="art"><img src="{icon}" alt="" loading="lazy" width="256" height="256">{badge(g)}</div>
+        <h3>{E(g['name'])}</h3>
+        <p>{E(g['tagline'])}</p>
+        <span class="go">Explore →</span>
+      </a>"""
+
+
+def build_studio():
+    """The company home page, in the Pages repo next to this one."""
+    if not STUDIO_DIR.is_dir():
+        print("skipped the studio home:", STUDIO_DIR, "not found")
+        return
+    (STUDIO_DIR / "assets" / "icons").mkdir(parents=True, exist_ok=True)
+    for f in ("style.css", "app.js"):
+        shutil.copy(ROOT / "assets" / f, STUDIO_DIR / "assets" / f)
+    for g in GAMES:
+        shutil.copy(ROOT / "assets" / "icons" / f"{g['slug']}.png", STUDIO_DIR / "assets" / "icons")
+
+    game_cards = [studio_card(g, f"{BASE}{g['slug']}/", f"assets/icons/{g['slug']}.png", i) for i, g in enumerate(GAMES)]
+    app_cards = [studio_card(a, f"{a['slug']}/", f"{a['slug']}/icon.png", i) for i, a in enumerate(APPS)]
+    icons = [(f"assets/icons/{g['slug']}.png", g["name"]) for g in GAMES[:4]] + [(f"{a['slug']}/icon.png", a["name"]) for a in APPS[:2]]
+    collage = "".join(f'<img class="ci ci{i}" src="{src}" alt="{E(name)}" width="256" height="256">' for i, (src, name) in enumerate(icons))
+    links = "".join(
+        f'<div><b>{E(g["name"])}</b><a href="{g["policy"]}privacy.html">Privacy</a><a href="{g["policy"]}support.html">Support</a></div>'
+        for g in GAMES
+    ) + "".join(
+        f'<div><b>{E(a["name"])}</b><a href="{a["slug"]}/privacy.html">Privacy</a><a href="{a["slug"]}/">Support</a></div>'
+        for a in APPS
+    )
+    org = json.dumps({
+        "@context": "https://schema.org", "@type": "Organization", "name": COMPANY, "url": STUDIO_URL,
+        "logo": STUDIO_URL + "assets/favicon.png", "email": SITE["email"],
+    })
+    desc = "Alauddin Studio makes cozy games and useful apps for Android and iPhone."
+    extra = f'\n  <script type="application/ld+json">{org}</script>'
+    page = f"""{head(COMPANY + ": cozy games and useful apps", desc, STUDIO_URL + "assets/og.png", STUDIO_URL, "", "#EEF5FF", extra)}
+<body class="studio">
+{backdrop()}
+  <div class="wrap">
+{topbar("", '<a href="#games">Games</a><a href="#apps">Apps</a><a href="#contact">Contact</a>', COMPANY, "A")}
+
+    <section class="hero home-hero studio-hero">
+      <div class="hero-text">
+        <span class="pill"><span class="dot"></span> Mobile games and apps studio</span>
+        <h1>Games and apps, made with <span class="rainbow">care</span></h1>
+        <p>{COMPANY} makes cozy games and useful apps for Android and iPhone.</p>
+        <div class="cta-row">
+          <a class="btn" href="#games">See the games</a>
+          <a class="btn ghost" href="#apps">See the apps</a>
+        </div>
+      </div>
+      <div class="collage" aria-hidden="true">{collage}</div>
+    </section>
+
+    <section id="games">
+      <div class="section-head reveal"><span class="eyebrow">Our games</span><h2>Cozy worlds to relax in</h2></div>
+      <div class="grid">
+{chr(10).join(game_cards)}
+      </div>
+    </section>
+
+    <section id="apps">
+      <div class="section-head reveal"><span class="eyebrow">Our apps</span><h2>Useful little helpers</h2></div>
+      <div class="grid center">
+{chr(10).join(app_cards)}
+      </div>
+    </section>
+
+    <section class="why" id="about">
+      <div class="section-head reveal"><span class="eyebrow">About us</span><h2>Small studio, big care</h2><p>We are an independent studio. We take one clear idea at a time and polish it until it feels right.</p></div>
+      <div class="why-grid">
+        <div class="why-card reveal" style="--d:0s"><span class="why-ic">🌱</span><b>One clear idea</b><span>Each game and app does one thing and does it well.</span></div>
+        <div class="why-card reveal" style="--d:.07s"><span class="why-ic">🎨</span><b>Made with care</b><span>Soft art, simple screens and details we are proud of.</span></div>
+        <div class="why-card reveal" style="--d:.14s"><span class="why-ic">🔒</span><b>Clear about privacy</b><span>Every game and app has its own plain privacy policy.</span></div>
+        <div class="why-card reveal" style="--d:.21s"><span class="why-ic">💬</span><b>Real support</b><span>Your email reaches the people who build the app.</span></div>
+      </div>
+    </section>
+
+    <section class="contact reveal" id="contact">
+      <span class="why-ic big">💌</span>
+      <h2>Say hello</h2>
+      <p>Found a bug, have an idea, or want to work with us? We read every message.</p>
+      <a class="btn" href="mailto:{SITE['email']}">Email us</a>
+    </section>
+  </div>
+{footer("", '<div class="foot-links">' + links + '</div>', COMPANY, "A", "Cozy games and useful apps.")}"""
+    (STUDIO_DIR / "index.html").write_text(page, encoding="utf-8")
+    print("built studio index.html")
+
+
+def build_app_store_row(a):
+    """Only the store row of an app page is built; the rest of the page is written by hand."""
+    if a["status"] == "live":
+        row = f'<a class="store" href="{play_url(a)}" target="_blank" rel="noopener">{PLAY_ICON} Get it on Google Play</a>'
+    else:
+        row = f'<span class="store off">{STATUS[a["status"]][0]}</span>'
+    for root in (STUDIO_DIR, ROOT.parent / "alauddin-apps" / "website"):
+        out = root / a["slug"] / "index.html"
+        if out.exists():
+            text = out.read_text(encoding="utf-8")
+            out.write_text(re.sub(r"<!-- store -->.*?<!-- /store -->", lambda m: f"<!-- store -->{row}<!-- /store -->", text, flags=re.S), encoding="utf-8")
+            print("built", out)
+
+
 build_home()
 for game in GAMES:
     build_game(game)
+build_studio()
+for app in APPS:
+    build_app_store_row(app)
