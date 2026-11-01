@@ -8,7 +8,15 @@
       "honeybee",
       "sheep",
       "petsalon"
-    ]
+    ],
+    "social": {
+      "title": "Follow Leafcure",
+      "links": [
+        ["TikTok", "https://www.tiktok.com/@leafcureapp"],
+        ["Instagram", "https://www.instagram.com/leafcureapp/"],
+        ["YouTube", "https://www.youtube.com/@leafcureapp"]
+      ]
+    }
   },
   "games": [
     {
@@ -268,6 +276,7 @@
       "pkg": "com.alauddin.plantdoctor",
       "status": "soon",
       "tagline": "Your AI plant doctor. Snap a sick leaf to find the problem and get step-by-step treatment.",
+      "highlights": ["📷 Snap a leaf", "🔍 Find the problem", "🌱 Step-by-step care"],
       "color": "#1F5C45",
       "color2": "#A9D3B6"
     },
@@ -280,6 +289,7 @@
       "pkg": "com.alauddin.paincast",
       "status": "soon",
       "tagline": "Air pressure alerts 24–48 hours ahead, with a simple pain diary that stays on your phone.",
+      "highlights": ["🌦️ Pressure alerts", "📝 Pain diary", "📱 Stays on your phone"],
       "color": "#4B4A9E",
       "color2": "#B9B3F0"
     }

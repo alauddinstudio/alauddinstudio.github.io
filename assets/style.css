@@ -231,6 +231,31 @@ section { scroll-margin-top: 16px; }
 .studio .ci3, .studio .ci4, .studio .ci5 { top: auto; bottom: 8%; }
 /* an app's name does not say what it does, so its card keeps the text on phones */
 .grid.center .game-card p { display: block; }
+.studio .game-card p { display: block; }
+.studio .game-card { height: 100%; }
+.studio .game-card .go { margin-top: auto; }
+.highlights { display: none; list-style: none; flex-wrap: wrap; gap: 6px; margin: 10px 6px 14px; }
+.highlights li {
+  padding: 3px 9px; border-radius: 999px; font-size: 12px; font-weight: 700; color: var(--ink);
+  background: color-mix(in srgb, var(--c2) 32%, white);
+}
+@media (min-width: 760px) { .highlights { display: flex; } }
+@media (max-width: 759px) { .studio .game-card .go { margin-top: 10px; } }
+.foot-cols { display: grid; gap: 22px 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 760px) { .foot-cols { grid-template-columns: repeat(4, 1fr); } }
+.foot-cols div { display: flex; flex-direction: column; font-size: 14px; }
+.foot-cols b { margin-bottom: 4px; }
+.foot-cols a { display: flex; align-items: center; min-height: 36px; color: var(--ink-soft); text-decoration: none; }
+.foot-cols a:hover { color: var(--ink); text-decoration: underline; }
+.legal { margin-top: 20px; border-top: 1px solid rgba(43, 33, 64, 0.1); }
+.legal summary { display: flex; align-items: center; min-height: 44px; font-size: 14px; font-weight: 800; cursor: pointer; }
+.legal-rows { display: grid; gap: 2px 24px; grid-template-columns: 1fr; padding-bottom: 8px; }
+@media (min-width: 760px) { .legal-rows { grid-template-columns: repeat(2, 1fr); } }
+.legal-rows div { display: flex; align-items: center; gap: 14px; font-size: 14px; }
+.legal-rows b { flex: 1; font-size: 14px; font-weight: 700; }
+.legal-rows a { display: flex; align-items: center; min-height: 40px; color: var(--ink-soft); }
+.made { margin-top: 18px; font-size: 14px; font-weight: 800; }
+.made + .copy { margin-top: 4px; }
 
 /* ---------- why ---------- */
 .why { padding-bottom: 56px; }
