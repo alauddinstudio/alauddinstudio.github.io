@@ -381,7 +381,8 @@
           "How do I delete my data?",
           "Delete a scan from History, or delete the app to remove everything. We do not keep an account for you."
         ]
-      ]
+      ],
+      "shots": 6
     },
     {
       "slug": "paincast",
@@ -486,7 +487,8 @@
           "How do I delete my data?",
           "Paincast → Settings → Delete all my data, or delete the app. Your diary is only on your phone; we have no account for you."
         ]
-      ]
+      ],
+      "shots": 6
     }
   ]
 }

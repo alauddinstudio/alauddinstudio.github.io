@@ -477,6 +477,16 @@ def build_app_page(a):
         for i, (t, x) in enumerate(a["steps"])
     )
     faq = "".join(f'<details class="faq"><summary>{E(q)}</summary><p>{answer}</p></details>' for q, answer in a["faq"])
+    shots = "".join(
+        f'<img src="shots/{i}.jpg" data-big="shots/{i}@2.jpg" alt="{E(a["name"])} screenshot {i}" loading="lazy" width="432" height="970">'
+        for i in range(1, a["shots"] + 1)
+    )
+    gallery = f"""    <section class="gallery tall reveal" aria-label="Screenshots">
+      <button class="arrow prev" type="button" aria-label="Previous screenshots">‹</button>
+      <div class="shots" style="--n:{a['shots']}">{shots}</div>
+      <button class="arrow next" type="button" aria-label="Next screenshots">›</button>
+      <p class="sample">Screens show sample data.</p>
+    </section>"""
     others = "".join(
         f'<a class="mini" href="../{o["slug"]}/" style="--c1:{o["color"]}"><img src="../{o["slug"]}/icon.png" alt="" loading="lazy" width="256" height="256"><span>{E(o["name"])}</span></a>'
         for o in APPS if o is not a
@@ -512,8 +522,9 @@ def build_app_page(a):
         <p>{E(a['lead'])}</p>
         <div class="cta-row">{cta}<a class="btn ghost" href="#features">See what it does</a></div>
       </div>
-      <div class="hero-visual"><div class="icon-stage big"><div class="ring"></div><img src="icon.png" alt="{E(a['name'])} icon" width="256" height="256"></div></div>
+      <div class="hero-visual"><div class="phone tall"><img src="shots/1.jpg" alt="{E(a['name'])} screenshot" width="432" height="970"></div></div>
     </section>
+{gallery}
 
     <section class="about" id="features">
       <div class="section-head reveal"><span class="eyebrow">What it does</span><h2>Everything in one simple app</h2></div>
