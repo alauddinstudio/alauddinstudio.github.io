@@ -429,7 +429,7 @@ def build_studio():
     </section>
 
     <section class="why" id="about">
-      <div class="section-head reveal"><span class="eyebrow">About us</span><h2>Small studio, big care</h2><p>We are an independent studio in Bangladesh. We take one clear idea at a time and polish it until it feels right.</p></div>
+      <div class="section-head reveal"><span class="eyebrow">About us</span><h2>Small studio, big care</h2><p>We are an independent studio. We take one clear idea at a time and polish it until it feels right.</p></div>
       <div class="why-grid">
         <div class="why-card reveal" style="--d:0s"><span class="why-ic">🌱</span><b>One clear idea</b><span>Each game and app does one thing and does it well.</span></div>
         <div class="why-card reveal" style="--d:.07s"><span class="why-ic">🎨</span><b>Made with care</b><span>Soft art, simple screens and details we are proud of.</span></div>
@@ -445,7 +445,7 @@ def build_studio():
       <a class="btn" href="mailto:{SITE['email']}">Email us</a>
     </section>
   </div>
-{footer("", links, COMPANY, studio_mark(), "Little ideas, a touch of magic.", f'<p class="made">Made in Bangladesh by {COMPANY}</p>')}"""
+{footer("", links, COMPANY, studio_mark(), "Little ideas, a touch of magic.", f'<p class="made">Made with care by {COMPANY}</p>')}"""
     (ROOT / "index.html").write_text(page, encoding="utf-8")
     print("built index.html")
 
@@ -487,7 +487,7 @@ def build_app_page(a):
         f'<div class="foot-links one"><div><b>{E(a["name"])}</b><a href="privacy.html">Privacy Policy</a><a href="#help">Support</a>'
         '<a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Terms of Use</a></div></div>'
     )
-    made = f'<p class="made">Made in Bangladesh by {COMPANY}</p>'
+    made = f'<p class="made">Made with care by {COMPANY}</p>'
     if a.get("credit"):
         made += f'<p class="credit">{E(a["credit"])}</p>'
     particles = json.dumps(a["particles"], ensure_ascii=False)
