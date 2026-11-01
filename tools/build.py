@@ -109,14 +109,14 @@ def badge(g):
     return f'<span class="badge {cls}"><span class="dot"></span>{label}</span>'
 
 
-def footer(prefix, links, name="cozyidle", mark="c", line="Small, gentle games made with love."):
+def footer(prefix, links, name="cozyidle", mark="c", line="Small, gentle games made with love.", made=""):
     return f"""  <footer class="footer">
     <div class="wrap">
       <div class="foot-top">
         <a class="brand" href="{prefix or './'}"><span class="brand-mark">{mark}</span><span>{name}</span></a>
         <p>{line}</p>
       </div>
-      {links}
+      {links}{made}
       <p class="copy">© 2026 <a href="{STUDIO_URL}">{COMPANY}</a> · <a href="mailto:{SITE['email']}">{SITE['email']}</a></p>
     </div>
   </footer>
@@ -344,12 +344,18 @@ def build_game(g):
     print("built", out.relative_to(ROOT))
 
 
-def studio_card(g, href, icon, i):
-    return f"""      <a class="game-card reveal" href="{href}" style="--c1:{g['color']};--c2:{g['color2']};--d:{i * 0.07:.2f}s">
-        <div class="art"><img src="{icon}" alt="{E(g['name'])} icon" loading="lazy" width="256" height="256">{badge(g)}</div>
+def studio_card(g, href, icon, i, highlights):
+    """A live game or app sends people straight to Google Play; the rest open their own page as Coming soon."""
+    live = g["status"] == "live"
+    target = f'{play_url(g)}" target="_blank" rel="noopener' if live else href
+    state = badge(g) if live else badge({"status": "soon"})
+    chips = "".join(f"<li>{E(h)}</li>" for h in highlights)
+    return f"""      <a class="game-card reveal" href="{target}" style="--c1:{g['color']};--c2:{g['color2']};--d:{i * 0.07:.2f}s">
+        <div class="art"><img src="{icon}" alt="{E(g['name'])} icon" loading="lazy" width="256" height="256">{state}</div>
         <h3>{E(g['name'])}</h3>
         <p>{E(g['tagline'])}</p>
-        <span class="go">Explore →</span>
+        <ul class="highlights">{chips}</ul>
+        <span class="go">{"Get it on Google Play" if live else "Explore"} →</span>
       </a>"""
 
 
@@ -364,17 +370,32 @@ def build_studio():
     for g in GAMES:
         shutil.copy(ROOT / "assets" / "icons" / f"{g['slug']}.png", STUDIO_DIR / "assets" / "icons")
 
-    game_cards = [studio_card(g, f"{BASE}{g['slug']}/", f"assets/icons/{g['slug']}.png", i) for i, g in enumerate(STUDIO_GAMES)]
-    app_cards = [studio_card(a, f"{a['slug']}/", f"{a['slug']}/icon.png", i) for i, a in enumerate(APPS)]
+    game_cards = [
+        studio_card(g, f"{BASE}{g['slug']}/", f"assets/icons/{g['slug']}.png", i, [f"{f[0]} {f[1]}" for f in g["features"][:3]])
+        for i, g in enumerate(STUDIO_GAMES)
+    ]
+    app_cards = [studio_card(a, f"{a['slug']}/", f"{a['slug']}/icon.png", i, a["highlights"]) for i, a in enumerate(APPS)]
+    any_live = any(g["status"] == "live" for g in GAMES + APPS)
+    store_note = "Find them on Google Play, with more on the way." if any_live else "Coming soon to Google Play and the App Store."
     icons = [(f"assets/icons/{g['slug']}.png", g["name"]) for g in GAMES[:4]] + [(f"{a['slug']}/icon.png", a["name"]) for a in APPS[:2]]
     collage = "".join(f'<img class="ci ci{i}" src="{src}" alt="{E(name)}" width="256" height="256">' for i, (src, name) in enumerate(icons))
-    links = "".join(
+    legal = "".join(
         f'<div><b>{E(g["name"])}</b><a href="{g["policy"]}privacy.html">Privacy</a><a href="{g["policy"]}support.html">Support</a></div>'
         for g in STUDIO_GAMES
     ) + "".join(
         f'<div><b>{E(a["name"])}</b><a href="{a["slug"]}/privacy.html">Privacy</a><a href="{a["slug"]}/">Support</a></div>'
         for a in APPS
     )
+    game_links = "".join(f'<a href="{BASE}{g["slug"]}/">{E(g["name"])}</a>' for g in STUDIO_GAMES)
+    app_links = "".join(f'<a href="{a["slug"]}/">{E(a["name"])}</a>' for a in APPS)
+    social = "".join(f'<a href="{url}" target="_blank" rel="noopener">{E(label)}</a>' for label, url in SITE["social"]["links"])
+    links = f"""<div class="foot-cols">
+        <div><b>Games</b>{game_links}</div>
+        <div><b>Apps</b>{app_links}</div>
+        <div><b>Studio</b><a href="#about">About us</a><a href="#contact">Contact</a></div>
+        <div><b>{E(SITE["social"]["title"])}</b>{social}</div>
+      </div>
+      <details class="legal"><summary>Privacy and support</summary><div class="legal-rows">{legal}</div></details>"""
     desc = "Alauddin Studio makes cozy games and useful apps for Android and iPhone."
     extra = '\n  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">' + ld({
         "@context": "https://schema.org", "@type": "Organization", "name": COMPANY, "url": STUDIO_URL,
@@ -388,7 +409,7 @@ def build_studio():
 
     <section class="hero home-hero studio-hero">
       <div class="hero-text">
-        <span class="pill"><span class="dot"></span> Mobile games and apps studio</span>
+        <span class="pill"><span class="dot"></span> Little ideas, a touch of magic</span>
         <h1>Games and apps, made with <span class="rainbow">care</span></h1>
         <p>{COMPANY} makes cozy games and useful apps for Android and iPhone.</p>
         <div class="cta-row">
@@ -400,21 +421,21 @@ def build_studio():
     </section>
 
     <section id="games">
-      <div class="section-head reveal"><span class="eyebrow">Our games</span><h2>Cozy worlds to relax in</h2></div>
+      <div class="section-head reveal"><span class="eyebrow">Our games</span><h2>Cozy worlds to relax in</h2><p>Gentle idle and merge games you can enjoy at your own pace. {store_note}</p></div>
       <div class="grid">
 {chr(10).join(game_cards)}
       </div>
     </section>
 
     <section id="apps">
-      <div class="section-head reveal"><span class="eyebrow">Our apps</span><h2>Useful little helpers</h2></div>
+      <div class="section-head reveal"><span class="eyebrow">Our apps</span><h2>Useful little helpers</h2><p>Simple apps that each solve one everyday problem.</p></div>
       <div class="grid center">
 {chr(10).join(app_cards)}
       </div>
     </section>
 
     <section class="why" id="about">
-      <div class="section-head reveal"><span class="eyebrow">About us</span><h2>Small studio, big care</h2><p>We are an independent studio. We take one clear idea at a time and polish it until it feels right.</p></div>
+      <div class="section-head reveal"><span class="eyebrow">About us</span><h2>Small studio, big care</h2><p>We are an independent studio in Bangladesh. We take one clear idea at a time and polish it until it feels right.</p></div>
       <div class="why-grid">
         <div class="why-card reveal" style="--d:0s"><span class="why-ic">🌱</span><b>One clear idea</b><span>Each game and app does one thing and does it well.</span></div>
         <div class="why-card reveal" style="--d:.07s"><span class="why-ic">🎨</span><b>Made with care</b><span>Soft art, simple screens and details we are proud of.</span></div>
@@ -430,7 +451,7 @@ def build_studio():
       <a class="btn" href="mailto:{SITE['email']}">Email us</a>
     </section>
   </div>
-{footer("", '<div class="foot-links">' + links + '</div>', COMPANY, STUDIO_MARK, "Cozy games and useful apps.")}"""
+{footer("", links, COMPANY, STUDIO_MARK, "Little ideas, a touch of magic.", f'<p class="made">Made in Bangladesh by {COMPANY}</p>')}"""
     (STUDIO_DIR / "index.html").write_text(page, encoding="utf-8")
     print("built studio index.html")
     write_seo_files(STUDIO_DIR, STUDIO_URL, [""] + [a["slug"] + "/" for a in APPS])
