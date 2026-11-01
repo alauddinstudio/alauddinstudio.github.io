@@ -266,6 +266,7 @@ section { scroll-margin-top: 16px; }
 .app-page .particles { display: none; }
 .phone.tall { aspect-ratio: 1080 / 2424; width: min(58vw, 270px); }
 .gallery.tall .shots img { aspect-ratio: 1080 / 2424; }
+@media (min-width: 900px) { .gallery.tall .shots { row-gap: 18px; } }
 .sample { margin-top: 2px; text-align: center; font-size: 13px; color: var(--ink-soft); }
 .step-no { font-family: "Fredoka", sans-serif; font-weight: 700; color: var(--c1); }
 .faqs { display: grid; gap: 10px; max-width: 760px; margin: 0 auto; }

@@ -483,9 +483,9 @@ def build_app_page(a):
     )
     gallery = f"""    <section class="gallery tall reveal" aria-label="Screenshots">
       <button class="arrow prev" type="button" aria-label="Previous screenshots">‹</button>
-      <div class="shots" style="--n:{a['shots']}">{shots}</div>
+      <div class="shots" style="--n:{a['shots'] // 2}">{shots}</div>
       <button class="arrow next" type="button" aria-label="Next screenshots">›</button>
-      <p class="sample">Screens show sample data.</p>
+      <p class="sample">Light and dark themes. Screens show sample data.</p>
     </section>"""
     others = "".join(
         f'<a class="mini" href="../{o["slug"]}/" style="--c1:{o["color"]}"><img src="../{o["slug"]}/icon.png" alt="" loading="lazy" width="256" height="256"><span>{E(o["name"])}</span></a>'
