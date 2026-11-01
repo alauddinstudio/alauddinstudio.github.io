@@ -1,5 +1,5 @@
 {
-  "_help": "status: testing | live | soon. After editing run: python tools/build.py. It also builds the Alauddin Studio home from games and apps.",
+  "_help": "status: testing | live | soon. After editing run: python tools/build.py. It also builds the Alauddin Studio home from games and apps. App pages are built from the apps list too.",
   "site": {
     "company": "Alauddin Studio",
     "email": "alauddinahmed7888@gmail.com",
@@ -7,14 +7,26 @@
     "studio_first": [
       "honeybee",
       "sheep",
-      "petsalon"
+      "petsalon",
+      "wooltree",
+      "flower",
+      "bakery"
     ],
     "social": {
       "title": "Follow Leafcure",
       "links": [
-        ["TikTok", "https://www.tiktok.com/@leafcureapp"],
-        ["Instagram", "https://www.instagram.com/leafcureapp/"],
-        ["YouTube", "https://www.youtube.com/@leafcureapp"]
+        [
+          "TikTok",
+          "https://www.tiktok.com/@leafcureapp"
+        ],
+        [
+          "Instagram",
+          "https://www.instagram.com/leafcureapp/"
+        ],
+        [
+          "YouTube",
+          "https://www.youtube.com/@leafcureapp"
+        ]
       ]
     }
   },
@@ -270,28 +282,211 @@
     {
       "slug": "leafcure",
       "name": "Leafcure",
-    "title": "Leafcure: Plant Disease Doctor",
-    "description": "Leafcure is an AI plant doctor. Snap a sick leaf to identify the plant, find the disease or pest, and get step-by-step treatment.",
-    "category": "LifestyleApplication",
+      "title": "Leafcure: Plant Disease Doctor",
+      "description": "Leafcure is an AI plant doctor. Snap a sick leaf to identify the plant, find the disease or pest, and get step-by-step treatment.",
+      "category": "LifestyleApplication",
       "pkg": "com.alauddin.plantdoctor",
       "status": "soon",
       "tagline": "Your AI plant doctor. Snap a sick leaf to find the problem and get step-by-step treatment.",
-      "highlights": ["📷 Snap a leaf", "🔍 Find the problem", "🌱 Step-by-step care"],
+      "highlights": [
+        "📷 Snap a leaf",
+        "🔍 Find the problem",
+        "🌱 Step-by-step care"
+      ],
       "color": "#1F5C45",
-      "color2": "#A9D3B6"
+      "color2": "#A9D3B6",
+      "tag": "Your AI plant doctor",
+      "lead": "Snap a photo of a sick leaf. Leafcure names the plant, finds the disease or pest, and tells you what to do, step by step.",
+      "particles": [
+        "🍃",
+        "🌿"
+      ],
+      "bg": "#F2F8F4",
+      "features": [
+        [
+          "🔍",
+          "Find the problem",
+          "Identifies the plant and the most likely problem, with two other possibilities."
+        ],
+        [
+          "📊",
+          "Know how serious it is",
+          "Shows how serious it is and how sure the diagnosis is."
+        ],
+        [
+          "🌱",
+          "Treat it safely",
+          "Gives treatment steps, safest options first, and tips to stop it coming back."
+        ],
+        [
+          "🐾",
+          "Pet safety check",
+          "Tells you if the plant is toxic to cats and dogs."
+        ],
+        [
+          "🗂️",
+          "All in one place",
+          "Keeps your plants and past scans in one place."
+        ],
+        [
+          "🌍",
+          "Six languages",
+          "English, Deutsch, Français, Español, 日本語, Português."
+        ]
+      ],
+      "steps": [
+        [
+          "Snap a photo",
+          "Take it in daylight, close to the sick part of the leaf."
+        ],
+        [
+          "Get the diagnosis",
+          "See the plant, the likely problem and how sure Leafcure is."
+        ],
+        [
+          "Follow the steps",
+          "Start with the safest treatment and stop it coming back."
+        ]
+      ],
+      "faq": [
+        [
+          "How do I get a good diagnosis?",
+          "Take the photo in daylight, close to the sick part of the leaf, and keep it sharp. If the photo is not clear enough, Leafcure tells you which photo to take next."
+        ],
+        [
+          "How many free scans do I get?",
+          "Two. Leafcure Premium unlocks unlimited scans and all features."
+        ],
+        [
+          "How do I cancel my subscription?",
+          "<b>iPhone:</b> Settings → your name → Subscriptions → Leafcure → Cancel Subscription.<br><b>Android:</b> Google Play → profile icon → Payments &amp; subscriptions → Subscriptions → Leafcure → Cancel.<br>Cancel at least 24 hours before the end of the period to avoid the next charge. Deleting the app does not cancel the subscription."
+        ],
+        [
+          "I bought Premium but the app still asks me to pay.",
+          "Open the paywall and tap <b>Restore purchases</b>, using the same Apple ID or Google account you paid with. If that does not help, email us."
+        ],
+        [
+          "How do I get a refund?",
+          "Payments are handled by Apple and Google, so refunds are too. iPhone: <a href=\"https://reportaproblem.apple.com\">reportaproblem.apple.com</a>. Android: Google Play → Payments &amp; subscriptions → Budget &amp; history, or the Google Play Help Center."
+        ],
+        [
+          "Is the diagnosis always right?",
+          "No. Leafcure gives AI advice and can be wrong. Always read the product label before using any treatment, and ask a local garden center when a plant is valuable or the problem is spreading fast."
+        ],
+        [
+          "What happens to my photos?",
+          "Photos are sent securely to create the diagnosis and are not stored on our server. Your history stays on your phone. See the <a href=\"privacy.html\">Privacy Policy</a>."
+        ],
+        [
+          "How do I delete my data?",
+          "Delete a scan from History, or delete the app to remove everything. We do not keep an account for you."
+        ]
+      ]
     },
     {
       "slug": "paincast",
       "name": "Paincast",
-    "title": "Paincast: Barometric Pressure Alerts & Pain Diary",
-    "description": "Paincast warns you 24–48 hours before big air pressure changes and keeps a simple pain diary, so you can plan around the weather.",
-    "category": "WeatherApplication",
+      "title": "Paincast: Barometric Pressure Alerts & Pain Diary",
+      "description": "Paincast warns you 24–48 hours before big air pressure changes and keeps a simple pain diary, so you can plan around the weather.",
+      "category": "WeatherApplication",
       "pkg": "com.alauddin.paincast",
       "status": "soon",
       "tagline": "Air pressure alerts 24–48 hours ahead, with a simple pain diary that stays on your phone.",
-      "highlights": ["🌦️ Pressure alerts", "📝 Pain diary", "📱 Stays on your phone"],
+      "highlights": [
+        "🌦️ Pressure alerts",
+        "📝 Pain diary",
+        "📱 Stays on your phone"
+      ],
       "color": "#4B4A9E",
-      "color2": "#B9B3F0"
+      "color2": "#B9B3F0",
+      "tag": "Know before the weather hits",
+      "lead": "Paincast watches the air pressure where you live and tells you 24–48 hours before a big change, so you can plan your day.",
+      "particles": [
+        "☁️",
+        "💧"
+      ],
+      "bg": "#F3F3FC",
+      "credit": "Weather data: MET Norway (CC BY 4.0)",
+      "features": [
+        [
+          "🌤️",
+          "Today at a glance",
+          "Calm, changing or a big change ahead."
+        ],
+        [
+          "📈",
+          "9-day forecast",
+          "A 9-day air pressure forecast with the big changes marked."
+        ],
+        [
+          "🔔",
+          "Early alerts",
+          "Alerts before big pressure drops and rises, plus a morning summary."
+        ],
+        [
+          "📝",
+          "One-tap pain diary",
+          "For headaches, migraine, joint pain and more."
+        ],
+        [
+          "🧭",
+          "Your own pattern",
+          "See how your entries line up with pressure changes."
+        ],
+        [
+          "🌍",
+          "Six languages",
+          "English, Deutsch, Français, Español, 日本語, Português."
+        ]
+      ],
+      "steps": [
+        [
+          "Add your place",
+          "Paincast watches the air pressure where you live."
+        ],
+        [
+          "Get an early alert",
+          "Hear about a big change 24–48 hours ahead."
+        ],
+        [
+          "Keep your diary",
+          "Log how you feel in one tap and see your own pattern."
+        ]
+      ],
+      "faq": [
+        [
+          "Is Paincast medical advice?",
+          "No. Paincast shows weather forecasts and compares them with your own diary. It does not diagnose, treat or prevent any condition. If your pain is new, severe or getting worse, see a doctor."
+        ],
+        [
+          "Where does the weather data come from?",
+          "From MET Norway (the Norwegian Meteorological Institute), under the CC BY 4.0 licence. It covers the whole world."
+        ],
+        [
+          "Why didn't I get an alert?",
+          "Check that notifications are allowed for Paincast in your phone's settings and that alerts are on in Paincast → Settings. Alerts are planned from the latest forecast, so open the app now and then to keep them up to date."
+        ],
+        [
+          "What is free and what is Premium?",
+          "Free: today's status, the next 48 hours, the diary and a morning summary. Premium adds the 9-day forecast, early alerts, your full pattern, several places and diary export."
+        ],
+        [
+          "How do I cancel my subscription?",
+          "<b>iPhone:</b> Settings → your name → Subscriptions → Paincast → Cancel Subscription.<br><b>Android:</b> Google Play → profile icon → Payments &amp; subscriptions → Subscriptions → Paincast → Cancel.<br>Cancel at least 24 hours before the end of the period to avoid the next charge. Deleting the app does not cancel the subscription."
+        ],
+        [
+          "I bought Premium but the app still asks me to pay.",
+          "Open Settings and tap <b>Restore purchases</b>, using the same Apple ID or Google account you paid with. If that does not help, email us."
+        ],
+        [
+          "How do I get a refund?",
+          "Payments are handled by Apple and Google, so refunds are too. iPhone: <a href=\"https://reportaproblem.apple.com\">reportaproblem.apple.com</a>. Android: Google Play → Payments &amp; subscriptions → Budget &amp; history, or the Google Play Help Center."
+        ],
+        [
+          "How do I delete my data?",
+          "Paincast → Settings → Delete all my data, or delete the app. Your diary is only on your phone; we have no account for you."
+        ]
+      ]
     }
   ]
 }
