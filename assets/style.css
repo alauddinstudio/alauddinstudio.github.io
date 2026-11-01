@@ -18,6 +18,8 @@ body {
   background: var(--bg);
   min-height: 100vh;
   overflow-x: hidden;
+  overflow-x: clip;
+  overflow-wrap: break-word;
   line-height: 1.5;
 }
 h1, h2, h3 { font-family: "Fredoka", "Nunito", sans-serif; letter-spacing: -0.01em; line-height: 1.1; }
@@ -55,25 +57,34 @@ section { scroll-margin-top: 16px; }
 }
 
 /* ---------- layout ---------- */
-.wrap { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+.wrap {
+  width: 100%; max-width: 1100px; margin: 0 auto;
+  padding: 0 max(16px, env(safe-area-inset-right)) 0 max(16px, env(safe-area-inset-left));
+  overflow-x: clip; /* the glow behind the phone must not make the page wider than the screen */
+}
 
-.topbar { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
-.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; }
+.topbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2px 8px; padding: 14px 0; }
+.brand { display: flex; align-items: center; gap: 10px; min-height: 44px; text-decoration: none; font-weight: 800; }
 .brand-mark {
   width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center;
   background: linear-gradient(135deg, #FFC93C, #FF7AA8 60%, #7AA8FF);
   color: white; font-family: "Fredoka", sans-serif; font-size: 20px; font-weight: 700;
   box-shadow: 0 6px 16px -6px rgba(255, 100, 150, 0.7);
 }
-.brand span:last-child { font-family: "Fredoka", sans-serif; font-size: 20px; }
+.brand span:last-child { font-family: "Fredoka", sans-serif; font-size: 20px; white-space: nowrap; }
 .nav { display: flex; gap: 4px; }
 .nav a {
-  text-decoration: none; font-weight: 800; font-size: 14px; padding: 8px 12px; border-radius: 999px;
+  display: inline-flex; align-items: center; min-height: 44px;
+  text-decoration: none; font-weight: 800; font-size: 14px; padding: 0 12px; border-radius: 999px;
   transition: background 0.2s;
 }
 .nav a:hover { background: rgba(255, 255, 255, 0.7); }
 .nav a:only-child { background: var(--card); border: 1px solid var(--card-border); }
-@media (max-width: 420px) { .nav a:not(:only-child) { padding: 8px 8px; font-size: 13px; } }
+@media (max-width: 420px) {
+  .nav a:not(:only-child) { padding: 0 8px; font-size: 13px; }
+  .brand { gap: 8px; }
+  .brand span:last-child { font-size: 18px; }
+}
 
 .section-head { text-align: center; max-width: 620px; margin: 0 auto 22px; }
 .section-head h2 { font-size: clamp(28px, 7vw, 42px); font-weight: 600; }
@@ -192,6 +203,34 @@ section { scroll-margin-top: 16px; }
   background: linear-gradient(135deg, var(--c1), color-mix(in srgb, var(--c1) 60%, var(--c2)));
 }
 
+/* few cards: keep them in the middle of the row */
+.grid.center { display: flex; flex-wrap: wrap; justify-content: center; }
+.grid.center .game-card { width: calc((100% - 16px) / 2); }
+@media (min-width: 760px) { .grid.center .game-card { width: calc((100% - 48px) / 3); } }
+
+/* ---------- studio home ---------- */
+.studio { --c1: #3D7BEA; --c2: #BCDCFF; --bg: #F5F9FF; }
+.studio .sky {
+  background:
+    radial-gradient(120% 80% at 50% -10%, #DCEBFF 0%, transparent 60%),
+    linear-gradient(180deg, #EEF5FF 0%, #F3F1FF 55%, #EAF8F3 100%);
+}
+.studio .blob { opacity: 0.4; mix-blend-mode: normal; }
+.studio .blob.b2 { background: #DAD3FF; }
+.studio .blob.b3 { background: #C4EEDF; }
+.studio .brand-mark { background: linear-gradient(135deg, #4FA3F7, #7C6BF0); box-shadow: 0 6px 16px -6px rgba(90, 100, 240, 0.7); }
+.studio .rainbow { background-image: linear-gradient(90deg, #2E8BFF, #8E6BFF, #22B8A0, #2E8BFF); }
+.studio-hero h1 { font-size: clamp(38px, 9vw, 66px); }
+/* six equal icons in two rows, so none hides behind another */
+.studio .ci { width: 32%; }
+.studio .ci0, .studio .ci3 { left: 0; right: auto; }
+.studio .ci1, .studio .ci4 { left: 34%; right: auto; }
+.studio .ci2, .studio .ci5 { left: auto; right: 0; }
+.studio .ci0, .studio .ci1, .studio .ci2 { top: 8%; bottom: auto; }
+.studio .ci3, .studio .ci4, .studio .ci5 { top: auto; bottom: 8%; }
+/* an app's name does not say what it does, so its card keeps the text on phones */
+.grid.center .game-card p { display: block; }
+
 /* ---------- why ---------- */
 .why { padding-bottom: 56px; }
 .why-grid { display: grid; gap: 14px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -258,9 +297,9 @@ section { scroll-margin-top: 16px; }
 .foot-links { display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (min-width: 760px) { .foot-links { grid-template-columns: repeat(3, 1fr); } }
 .foot-links.one { grid-template-columns: 1fr; }
-.foot-links div { display: flex; flex-direction: column; gap: 4px; font-size: 14px; }
+.foot-links div { display: flex; flex-direction: column; font-size: 14px; }
 .foot-links b { font-size: 14px; }
-.foot-links a { color: var(--ink-soft); text-decoration: none; }
+.foot-links a { display: block; padding: 10px 0; color: var(--ink-soft); text-decoration: none; }
 .foot-links a:hover { color: var(--ink); text-decoration: underline; }
 .copy { margin-top: 28px; font-size: 13px; color: var(--ink-soft); }
 .copy a { color: inherit; }
@@ -442,6 +481,22 @@ section { scroll-margin-top: 16px; }
 @keyframes pop {
   0% { transform: translate(0, 0) scale(0.4); opacity: 1; }
   100% { transform: translate(var(--dx), var(--dy)) scale(1.1) rotate(var(--rot)); opacity: 0; }
+}
+
+/* Touch screens have no hover: a tapped card must not stay lifted. */
+@media (hover: none) {
+  .game-card:hover, .game-card.reveal.in:hover, .mini:hover, .chip:hover, .shots img:hover { transform: none; }
+  .game-card:hover .art img { transform: none; }
+}
+
+/* Older phones without color-mix would lose these whole backgrounds. */
+@supports not (color: color-mix(in srgb, red, blue)) {
+  .btn, .game-card .go, .num { background: var(--c1); }
+  .sky { background: linear-gradient(180deg, #FFF6E6 0%, #FDEFF6 55%, #EEF4FF 100%); }
+  .studio .sky { background: linear-gradient(180deg, #EEF5FF 0%, #F3F1FF 55%, #EAF8F3 100%); }
+  .why-ic, .feat-ic { background: linear-gradient(135deg, var(--c2), white); }
+  .eyebrow { color: var(--ink-soft); }
+  .notes { background: rgba(255, 255, 255, 0.7); border-color: var(--c1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
