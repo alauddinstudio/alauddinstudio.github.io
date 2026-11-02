@@ -1,32 +1,32 @@
 # alauddinstudio.com
 
-Alauddin Studio-র পুরো ওয়েবসাইট এই একটা repo-তেই থাকে। এখানে push করলে GitHub Pages এক-দুই মিনিটে https://alauddinstudio.com আপডেট করে দেয়।
+The whole Alauddin Studio website lives in this one repo. When you push here, GitHub Pages updates https://alauddinstudio.com within a minute or two.
 
-## তিনটা নিয়ম
+## Three rules
 
-1. **সাইটের সবকিছু শুধু এখানে বদলাবেন।** `cozy-idle-games` বা `alauddin-apps` repo-তে সাইটের কোনো কপি নেই, রাখবেনও না।
-2. **গেম আর অ্যাপের পাতা হাতে লিখবেন না।** লেখা বদলাতে `data/games.json` বদলান, তারপর চালান:
+1. **Change the site only here.** The `cozy-idle-games` and `alauddin-apps` repos hold no copy of the site, and should not.
+2. **Don't hand-edit the game and app pages.** To change their text, edit `data/games.json`, then run:
    ```
    python3 tools/build.py
    ```
-3. **কোনো পাতার ঠিকানা বদলাবেন না।** Play Console, AdMob আর গেমের কোডে এই ঠিকানাগুলোই বসানো আছে।
+3. **Never change a page's address.** These addresses are set in Play Console, AdMob and the game code.
 
-## কোন ফাইল কী কাজ করে
+## What each file does
 
-| ফাইল বা folder | কী | হাতে বদলানো যায়? |
+| File or folder | What it is | Edit by hand? |
 |---|---|---|
-| `data/games.json` | সব গেম আর অ্যাপের লেখা, অবস্থা, রঙ। গেমগুলো চালু হলে এটা পড়ে "More cozy games" তালিকা দেখায় | হ্যাঁ, সব বদল এখান থেকে শুরু |
-| `tools/build.py` | `games.json` থেকে সব পাতা বানায় | শুধু নকশা বদলাতে |
-| `index.html`, `games/`, `honeybee/`, `bakery/`, `flower/`, `petsalon/`, `sheep/`, `wooltree/`, `leafcure/index.html`, `paincast/index.html`, `robots.txt`, `sitemap.xml` | build-এর বানানো পাতা | না, পরের build মুছে দেয় |
-| `honey-bee/`, `cozy-bakery/`, `flower-shop/`, `pet-salon/`, `sheep-merge/`, root-এর `privacy.html` আর `support.html` (Wool Tree) | গেমের Privacy আর Support। প্রতিটা folder-এর `index.html` শুধু `support.html`-এ পাঠায়, কারণ গেমের ভেতরে `alauddinstudio.com/pet-salon` এভাবে লেখা থাকে | হ্যাঁ, হাতে লেখা |
-| `leafcure/privacy.html`, `paincast/privacy.html` | অ্যাপের Privacy | হ্যাঁ, হাতে লেখা |
-| `assets/` | নকশা (`style.css`, `app.js`), লোগো, গেমের আইকন, screenshot, ভিডিও | হ্যাঁ। তবে `assets/icons/` আর `assets/shots/`-এর ফাইলের নাম বদলাবেন না, গেমগুলো এই নামেই ছবি আনে |
-| `app-ads.txt` | AdMob-এর ফাইল | না, root-এই থাকতে হবে |
-| `CNAME` | domain `alauddinstudio.com` | না |
-| `google*.html` | Search Console-এর যাচাই | না, মুছলে যাচাই বাতিল হয় |
-| `.nojekyll` | GitHub-কে ফাইল যেমন আছে তেমন দেখাতে বলে | না |
+| `data/games.json` | Text, status and colors for every game and app. The games read it at launch to show the "More cozy games" list | Yes, every change starts here |
+| `tools/build.py` | Builds all pages from `games.json` | Only to change the design |
+| `index.html`, `games/`, `honeybee/`, `bakery/`, `flower/`, `petsalon/`, `sheep/`, `wooltree/`, `leafcure/index.html`, `paincast/index.html`, `robots.txt`, `sitemap.xml` | Pages made by the build | No, the next build overwrites them |
+| `honey-bee/`, `cozy-bakery/`, `flower-shop/`, `pet-salon/`, `sheep-merge/`, and the root `privacy.html` and `support.html` (Wool Tree) | Game Privacy and Support pages. Each folder's `index.html` just sends visitors to `support.html`, because the games link to addresses like `alauddinstudio.com/pet-salon` | Yes, hand-written |
+| `leafcure/privacy.html`, `paincast/privacy.html` | App Privacy pages | Yes, hand-written |
+| `assets/` | Design (`style.css`, `app.js`), logo, game icons, screenshots, videos | Yes. But don't rename files in `assets/icons/` or `assets/shots/`, the games load images by these names |
+| `app-ads.txt` | AdMob file | No, it must stay at the root |
+| `CNAME` | The `alauddinstudio.com` domain | No |
+| `google*.html` | Search Console verification | No, deleting them cancels verification |
+| `.nojekyll` | Tells GitHub to serve files exactly as they are | No |
 
-## বিস্তারিত
+## More details
 
-- রোজকার কাজের গাইড (কোন পাতায় কী আছে, গেম live করা, নতুন গেম বা অ্যাপ যোগ করা, domain আর account): `cozy-idle-games` repo-র [`docs/cozyidle_website.md`](https://github.com/Alauddinahmed9282/cozy-idle-games/blob/main/docs/cozyidle_website.md)।
-- Architecture (কোন repo কী করে, ২০২৬-১১-০২-এ কী বদলানো হলো): [`docs/common/website_architecture.md`](https://github.com/Alauddinahmed9282/cozy-idle-games/blob/main/docs/common/website_architecture.md)। একই ফাইল `alauddin-apps/docs/common/`-এও আছে।
+- Day-to-day guide (what each page holds, taking a game live, adding a new game or app, domain and accounts): [`docs/cozyidle_website.md`](https://github.com/Alauddinahmed9282/cozy-idle-games/blob/main/docs/cozyidle_website.md) in the `cozy-idle-games` repo.
+- Architecture (what each repo does, what changed on 2026-11-02): [`docs/common/website_architecture.md`](https://github.com/Alauddinahmed9282/cozy-idle-games/blob/main/docs/common/website_architecture.md). The same file is also in `alauddin-apps/docs/common/`.
