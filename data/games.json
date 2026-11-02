@@ -2,7 +2,7 @@
   "_help": "status: testing | live | soon. After editing run: python tools/build.py. It also builds the Alauddin Studio home from games and apps. App pages are built from the apps list too.",
   "site": {
     "company": "Alauddin Studio",
-    "email": "alauddinahmed7888@gmail.com",
+    "email": "hello@alauddinstudio.com",
     "policy_base": "https://alauddinstudio.com/",
     "studio_first": [
       "honeybee",
