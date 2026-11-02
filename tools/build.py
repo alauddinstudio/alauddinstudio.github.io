@@ -352,10 +352,11 @@ def studio_card(g, href, icon, i, highlights):
     live = g["status"] == "live"
     target = f'{play_url(g)}" target="_blank" rel="noopener' if live else href
     state = badge(g) if live else badge({"status": "soon"})
+    label = STATUS[g["status"] if live else "soon"][0]
     chips = "".join(f"<li>{E(h)}</li>" for h in highlights)
     return f"""      <a class="game-card reveal" href="{target}" style="--c1:{g['color']};--c2:{g['color2']};--d:{i * 0.07:.2f}s">
         <div class="art"><img src="{icon}" alt="{E(g['name'])} icon" loading="lazy" width="256" height="256">{state}</div>
-        <h3>{E(g['name'])}</h3>
+        <h3 data-status="{E(label)}">{E(g['name'])}</h3>
         <p>{E(g['tagline'])}</p>
         <ul class="highlights">{chips}</ul>
         <span class="go">{"Get it on Google Play" if live else "Explore"} →</span>
