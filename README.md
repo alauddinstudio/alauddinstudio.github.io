@@ -28,4 +28,5 @@ Alauddin Studio-র পুরো ওয়েবসাইট এই একটা
 
 ## বিস্তারিত
 
-পুরো গাইড (কোন পাতায় কী আছে, গেম live করা, নতুন গেম বা অ্যাপ যোগ করা, domain আর account-এর তথ্য) আছে `cozy-idle-games` repo-র [`docs/cozyidle_website.md`](https://github.com/Alauddinahmed9282/cozy-idle-games/blob/main/docs/cozyidle_website.md)-এ।
+- রোজকার কাজের গাইড (কোন পাতায় কী আছে, গেম live করা, নতুন গেম বা অ্যাপ যোগ করা, domain আর account): `cozy-idle-games` repo-র [`docs/cozyidle_website.md`](https://github.com/Alauddinahmed9282/cozy-idle-games/blob/main/docs/cozyidle_website.md)।
+- Architecture (কোন repo কী করে, ২০২৬-১১-০২-এ কী বদলানো হলো): [`docs/common/website_architecture.md`](https://github.com/Alauddinahmed9282/cozy-idle-games/blob/main/docs/common/website_architecture.md)। একই ফাইল `alauddin-apps/docs/common/`-এও আছে।
