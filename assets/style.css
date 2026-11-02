@@ -554,3 +554,49 @@ section { scroll-margin-top: 16px; }
   .js .reveal { opacity: 1; transform: none; }
   .particles { display: none; }
 }
+
+/* phones: the first screen leads to the games and apps, not to a pile of icons */
+@media (max-width: 859px) {
+  .studio-hero { padding-bottom: 20px; }
+  .studio-hero .collage { display: none; }
+}
+@media (max-width: 759px) {
+  .studio section[id] { scroll-margin-top: 76px; }
+  .studio .topbar {
+    position: sticky; top: 0; z-index: 20;
+    flex-wrap: nowrap; margin: 0 -16px; padding: 6px 16px;
+    background: rgba(238, 245, 255, 0.82);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  }
+  .studio .grid { display: flex; flex-direction: column; gap: 10px; padding-bottom: 36px; }
+  .studio .grid.center .game-card { width: 100%; }
+  .studio .game-card {
+    display: grid; grid-template-columns: 72px minmax(0, 1fr) 20px; column-gap: 12px;
+    align-items: center; padding: 10px 12px 10px 10px; height: auto;
+  }
+  .studio .game-card .art { grid-row: 1 / 3; border-radius: 18px; }
+  .studio .game-card .badge { display: none; }
+  .studio .game-card h3 { margin: 0; align-self: end; font-size: 18px; }
+  .studio .game-card h3::after {
+    content: attr(data-status); margin-left: 6px; font: 700 11px "Nunito", sans-serif;
+    color: var(--ink-soft); white-space: nowrap;
+  }
+  .studio .grid .game-card p {
+    grid-column: 2; margin: 2px 0 0; align-self: start;
+  }
+  .studio .game-card .go {
+    grid-column: 3; grid-row: 1 / 3; margin: 0; padding: 0; align-self: center;
+    background: none; color: var(--ink-soft); font-size: 0;
+  }
+  .studio .game-card .go::before { content: "›"; font-size: 26px; }
+}
+@media (max-width: 380px) {
+  .studio .topbar .nav { gap: 0; }
+  .studio .topbar .nav a { padding: 0 6px; }
+  .studio .topbar .brand { gap: 6px; }
+  .studio .topbar .brand-mark, .studio .topbar .brand-mark img { width: 30px; height: 30px; }
+  .studio .topbar .brand span:last-child { font-size: 16px; }
+}
+
+.legal summary::after { content: "▾"; margin-left: 6px; color: var(--ink-soft); transition: transform 0.2s; }
+.legal[open] summary::after { transform: rotate(180deg); }
