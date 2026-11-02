@@ -18,7 +18,7 @@ Alauddin Studio-র পুরো ওয়েবসাইট এই একটা
 | `data/games.json` | সব গেম আর অ্যাপের লেখা, অবস্থা, রঙ। গেমগুলো চালু হলে এটা পড়ে "More cozy games" তালিকা দেখায় | হ্যাঁ, সব বদল এখান থেকে শুরু |
 | `tools/build.py` | `games.json` থেকে সব পাতা বানায় | শুধু নকশা বদলাতে |
 | `index.html`, `games/`, `honeybee/`, `bakery/`, `flower/`, `petsalon/`, `sheep/`, `wooltree/`, `leafcure/index.html`, `paincast/index.html`, `robots.txt`, `sitemap.xml` | build-এর বানানো পাতা | না, পরের build মুছে দেয় |
-| `honey-bee/`, `cozy-bakery/`, `flower-shop/`, `pet-salon/`, `sheep-merge/`, root-এর `privacy.html` আর `support.html` (Wool Tree) | গেমের Privacy আর Support | হ্যাঁ, হাতে লেখা |
+| `honey-bee/`, `cozy-bakery/`, `flower-shop/`, `pet-salon/`, `sheep-merge/`, root-এর `privacy.html` আর `support.html` (Wool Tree) | গেমের Privacy আর Support। প্রতিটা folder-এর `index.html` শুধু `support.html`-এ পাঠায়, কারণ গেমের ভেতরে `alauddinstudio.com/pet-salon` এভাবে লেখা থাকে | হ্যাঁ, হাতে লেখা |
 | `leafcure/privacy.html`, `paincast/privacy.html` | অ্যাপের Privacy | হ্যাঁ, হাতে লেখা |
 | `assets/` | নকশা (`style.css`, `app.js`), লোগো, গেমের আইকন, screenshot, ভিডিও | হ্যাঁ। তবে `assets/icons/` আর `assets/shots/`-এর ফাইলের নাম বদলাবেন না, গেমগুলো এই নামেই ছবি আনে |
 | `app-ads.txt` | AdMob-এর ফাইল | না, root-এই থাকতে হবে |
