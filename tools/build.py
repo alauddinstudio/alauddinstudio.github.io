@@ -343,6 +343,7 @@ def build_game(g):
 {footer("../", links, home="../games/")}"""
     out = ROOT / slug / "index.html"
     out.parent.mkdir(exist_ok=True)
+    out.parent.mkdir(exist_ok=True)
     out.write_text(page, encoding="utf-8")
     print("built", out.relative_to(ROOT))
 
@@ -546,11 +547,10 @@ def build_app_page(a):
     </section>
   </div>
 {footer(prefix, links, COMPANY, studio_mark(prefix), "Little ideas, a touch of magic.", made)}"""
-    for root in (ROOT, ROOT.parent / "alauddin-apps" / "website"):
-        out = root / slug / "index.html"
-        if out.exists():
-            out.write_text(page, encoding="utf-8", newline="\n")
-            print("built", out)
+    out = ROOT / slug / "index.html"
+    out.parent.mkdir(exist_ok=True)
+    out.write_text(page, encoding="utf-8", newline="\n")
+    print("built", out.relative_to(ROOT))
 
 
 build_home()
