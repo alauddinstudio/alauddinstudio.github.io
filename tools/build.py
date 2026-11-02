@@ -97,7 +97,9 @@ def studio_mark(prefix=""):
     return f'<img src="{prefix}assets/logo-icon.svg" alt="" width="36" height="36">'
 
 
-def topbar(prefix, right, name="cozyidle", mark="c"):
+def topbar(prefix, right, name=COMPANY, mark=None):
+    """Every page shows the studio's logo and name, linking to the studio home at prefix."""
+    mark = mark or studio_mark(prefix)
     return f"""    <header class="topbar">
       <a class="brand" href="{prefix or './'}"><span class="brand-mark">{mark}</span><span>{name}</span></a>
       <nav class="nav">{right}</nav>
@@ -109,7 +111,8 @@ def badge(g):
     return f'<span class="badge {cls}"><span class="dot"></span>{label}</span>'
 
 
-def footer(prefix, links, name="cozyidle", mark="c", line="Small, gentle games made with love.", made="", home=None):
+def footer(prefix, links, name=COMPANY, mark=None, line="Small, gentle games made with love.", made="", home=None):
+    mark = mark or studio_mark(prefix)
     return f"""  <footer class="footer">
     <div class="wrap">
       <div class="foot-top">
@@ -162,11 +165,11 @@ def build_home():
         f'<div><b>{E(g["name"])}</b><a href="{policy(g, "privacy")}">Privacy</a><a href="{policy(g, "support")}">Support</a></div>'
         for g in GAMES
     )
-    page = f"""{head("cozyidle: little cozy games", "Small, gentle idle games with cute critters. Bees, bakeries, blossoms, fluffy sheep and more.", BASE + "assets/og-games.png", BASE + "games/", "../", "#FFF6E6", favicon="favicon-games.png")}
+    page = f"""{head(f"Cozy games by {COMPANY}", "Small, gentle idle games with cute critters. Bees, bakeries, blossoms, fluffy sheep and more.", BASE + "assets/og-games.png", BASE + "games/", "../", "#FFF6E6")}
 <body data-particles='["🐝","🌸","🥐","🫧","❄️","🧶","🍃","✨"]'>
 {backdrop()}
   <div class="wrap">
-{topbar("./", '<a href="#games">Games</a><a href="#why">About</a><a href="#contact">Contact</a>')}
+{topbar("../", '<a href="#games">Games</a><a href="#why">About</a><a href="#contact">Contact</a>')}
 
     <section class="hero home-hero">
       <div class="hero-text">
@@ -206,7 +209,7 @@ def build_home():
       <a class="btn" href="mailto:{SITE['email']}">Email us</a>
     </section>
   </div>
-{footer("../", '<div class="foot-links">' + links + '</div>', home="./")}"""
+{footer("../", '<div class="foot-links">' + links + '</div>')}"""
     out = ROOT / "games" / "index.html"
     out.parent.mkdir(exist_ok=True)
     out.write_text(page, encoding="utf-8")
@@ -314,11 +317,11 @@ def build_game(g):
         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
     })
 
-    page = f"""{head(g["title"], desc, BASE + "assets/icons/" + slug + ".png", BASE + slug + "/", "../", g["color"], style, "favicon-games.png")}
+    page = f"""{head(g["title"], desc, BASE + "assets/icons/" + slug + ".png", BASE + slug + "/", "../", g["color"], style)}
 <body data-game="{slug}" data-status="{status}" data-particles='{particles}'>
 {backdrop()}
   <div class="wrap">
-{topbar("../games/", '<a href="../games/#games">All games</a>')}
+{topbar("../", '<a href="../games/#games">All games</a>')}
 {inapp}
     <section class="hero game-hero">
       <div class="hero-text">
@@ -336,11 +339,11 @@ def build_game(g):
     </section>
 {tester}
     <section class="more">
-      <div class="section-head reveal"><span class="eyebrow">More from cozyidle</span><h2>Other cozy worlds</h2></div>
+      <div class="section-head reveal"><span class="eyebrow">More from {COMPANY}</span><h2>Other cozy worlds</h2></div>
       <div class="minis">{more_games}</div>
     </section>
   </div>
-{footer("../", links, home="../games/")}"""
+{footer("../", links)}"""
     out = ROOT / slug / "index.html"
     out.parent.mkdir(exist_ok=True)
     out.parent.mkdir(exist_ok=True)
