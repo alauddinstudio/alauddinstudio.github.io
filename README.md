@@ -17,9 +17,9 @@ The whole Alauddin Studio website lives in this one repo. When you push here, Gi
 |---|---|---|
 | `data/games.json` | Text, status and colors for every game and app. The games read it at launch to show the "More cozy games" list | Yes, every change starts here |
 | `tools/build.py` | Builds all pages from `games.json` | Only to change the design |
-| `index.html`, `games/`, `honeybee/`, `bakery/`, `flower/`, `petsalon/`, `sheep/`, `wooltree/`, `leafcure/index.html`, `paincast/index.html`, `robots.txt`, `sitemap.xml` | Pages made by the build | No, the next build overwrites them |
+| `index.html`, `games/`, `honeybee/`, `bakery/`, `flower/`, `petsalon/`, `sheep/`, `wooltree/`, `leafcure/index.html`, `paincast/index.html`, `kinring/index.html`, `robots.txt`, `sitemap.xml` | Pages made by the build | No, the next build overwrites them |
 | `honey-bee/`, `cozy-bakery/`, `flower-shop/`, `pet-salon/`, `sheep-merge/`, and the root `privacy.html` and `support.html` (Wool Tree) | Game Privacy and Support pages. Each folder's `index.html` just sends visitors to `support.html`, because the games link to addresses like `alauddinstudio.com/pet-salon` | Yes, hand-written |
-| `leafcure/privacy.html`, `paincast/privacy.html` | App Privacy pages | Yes, hand-written |
+| `leafcure/privacy.html`, `paincast/privacy.html`, `kinring/privacy.html` | App Privacy pages | Yes, hand-written |
 | `assets/` | Design (`style.css`, `app.js`), logo, game icons, screenshots, videos | Yes. But don't rename files in `assets/icons/` or `assets/shots/`, the games load images by these names |
 | `app-ads.txt` | AdMob file | No, it must stay at the root |
 | `CNAME` | The `alauddinstudio.com` domain | No |

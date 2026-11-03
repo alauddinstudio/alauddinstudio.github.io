@@ -489,6 +489,112 @@
         ]
       ],
       "shots": 10
+    },
+    {
+      "slug": "kinring",
+      "name": "Kinring",
+      "title": "Kinring: Keep in Touch Family",
+      "description": "Kinring is a daily reminder to make time for your family. See who needs your time today, with one small idea for each person.",
+      "category": "LifestyleApplication",
+      "pkg": "com.alauddin.kinring",
+      "status": "soon",
+      "tagline": "A daily nudge to call Mom, text your brother and play with your kids.",
+      "highlights": [
+        "📞 Who needs you today",
+        "💍 A ring for each person",
+        "📱 Stays on your phone"
+      ],
+      "color": "#E07A5F",
+      "color2": "#F2CC8F",
+      "tag": "Make time for family",
+      "lead": "Busy days fly by. Kinring shows 1 to 3 people who need your time today, and one small thing to do for each.",
+      "particles": [
+        "❤️",
+        "🧡"
+      ],
+      "bg": "#FFF8F1",
+      "features": [
+        [
+          "📞",
+          "Who needs you today",
+          "1 to 3 people a day, with one small idea for each."
+        ],
+        [
+          "💍",
+          "A ring for each person",
+          "Full ring: you gave them time. Low ring: they miss you."
+        ],
+        [
+          "⏳",
+          "A number that stays",
+          "See about how many more times you may see Mom or Dad."
+        ],
+        [
+          "📊",
+          "Your week",
+          "See who got your time this week, person by person."
+        ],
+        [
+          "💬",
+          "Questions to ask",
+          "12 questions to ask your parents and grandparents."
+        ],
+        [
+          "🌍",
+          "Eight languages",
+          "English, Deutsch, Français, Español, 日本語, Português, 한국어, 繁體中文."
+        ]
+      ],
+      "steps": [
+        [
+          "Add your family",
+          "Mom, Dad, kids, partner, brother, sister, friends."
+        ],
+        [
+          "Get a daily nudge",
+          "One quiet reminder, at the time you pick."
+        ],
+        [
+          "Tap \"Did it\"",
+          "Their ring fills up again."
+        ]
+      ],
+      "faq": [
+        [
+          "How is \"72 more times\" counted?",
+          "It is a simple estimate: (82 − their age) × how often you meet each year. It can be wrong, so Kinring says \"may\". It is there to remind you, not to scare you."
+        ],
+        [
+          "What is free and what is Premium?",
+          "Free: one person, the daily nudge, their ring and the \"more times\" number. Premium adds your whole family, daily ideas for each person, your week and 12 questions to ask your parents."
+        ],
+        [
+          "Why didn't I get a reminder?",
+          "Check that notifications are allowed for Kinring in your phone's settings, and that the reminder is on in Kinring → Settings."
+        ],
+        [
+          "How do I cancel my subscription?",
+          "<b>iPhone:</b> Settings → your name → Subscriptions → Kinring → Cancel Subscription.<br><b>Android:</b> Google Play → profile icon → Payments &amp; subscriptions → Subscriptions → Kinring → Cancel.<br>Cancel at least 24 hours before the end of the period to avoid the next charge. Deleting the app does not cancel the subscription."
+        ],
+        [
+          "I bought Premium but the app still asks me to pay.",
+          "Open Settings and tap <b>Restore purchases</b>, using the same Apple ID or Google account you paid with. If that does not help, email us."
+        ],
+        [
+          "How do I get a refund?",
+          "Payments are handled by Apple and Google, so refunds are too. iPhone: <a href=\"https://reportaproblem.apple.com\">reportaproblem.apple.com</a>. Android: Google Play → Payments &amp; subscriptions → Budget &amp; history, or the Google Play Help Center."
+        ],
+        [
+          "Does Kinring read my contacts?",
+          "No. You type the names yourself. Your family list stays on your phone; we have no account for you. See the <a href=\"privacy.html\">Privacy Policy</a>."
+        ],
+        [
+          "How do I delete my data?",
+          "Kinring → Settings → Delete all data, or delete the app."
+        ]
+      ],
+      "shots": 6,
+      "dark_shots": false
     }
   ]
 }
