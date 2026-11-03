@@ -477,11 +477,14 @@ def build_app_page(a):
         f'<img src="shots/{i}.jpg" data-big="shots/{i}@2.jpg" alt="{E(a["name"])} screenshot {i}" loading="lazy" width="432" height="970">'
         for i in range(1, a["shots"] + 1)
     )
+    dark = a.get("dark_shots", True)  # first half light, second half dark
+    per_row = a["shots"] // 2 if dark else a["shots"]
+    note = "Light and dark themes. Screens show sample data." if dark else "Screens show sample data."
     gallery = f"""    <section class="gallery tall reveal" aria-label="Screenshots">
       <button class="arrow prev" type="button" aria-label="Previous screenshots">‹</button>
-      <div class="shots" style="--n:{a['shots'] // 2}">{shots}</div>
+      <div class="shots" style="--n:{per_row}">{shots}</div>
       <button class="arrow next" type="button" aria-label="Next screenshots">›</button>
-      <p class="sample">Light and dark themes. Screens show sample data.</p>
+      <p class="sample">{note}</p>
     </section>"""
     others = "".join(
         f'<a class="mini" href="../{o["slug"]}/" style="--c1:{o["color"]}"><img src="../{o["slug"]}/icon.png" alt="" loading="lazy" width="256" height="256"><span>{E(o["name"])}</span></a>'
