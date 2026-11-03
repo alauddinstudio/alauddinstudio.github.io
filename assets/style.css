@@ -233,6 +233,8 @@ section { scroll-margin-top: 16px; }
 .grid.center .game-card p { display: block; }
 .studio .game-card p { display: block; }
 .studio .game-card { height: 100%; }
+/* in the centred flex row a fixed height stops cards stretching to the tallest one */
+.studio .grid.center .game-card { height: auto; }
 .studio .game-card .go { margin-top: auto; }
 .highlights { display: none; list-style: none; flex-wrap: wrap; gap: 6px; margin: 10px 6px 14px; }
 .highlights li {
