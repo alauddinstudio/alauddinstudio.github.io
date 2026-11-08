@@ -594,6 +594,210 @@
         ]
       ],
       "shots": 12
+    },
+    {
+      "slug": "zaytun",
+      "name": "Zaytun",
+      "title": "Zaytun: Hifz Quran & Juz Amma",
+      "description": "Zaytun helps you memorize the Quran the madrasa way: Sabaq, Sabqi and Manzil, a few ayat a day, offline and without ads.",
+      "category": "EducationApplication",
+      "pkg": "com.alauddin.zaytun",
+      "status": "soon",
+      "tagline": "Memorize the Quran a few ayat a day, and never forget them.",
+      "highlights": [
+        "📖 Sabaq, Sabqi, Manzil",
+        "🎧 Loop, slow down, record",
+        "🌙 Ramadan times and khatam"
+      ],
+      "color": "#5B6B2F",
+      "color2": "#C8643B",
+      "tag": "Memorize. Never forget.",
+      "lead": "The real madrasa method on your phone: new ayat each day, recent revision and old revision, planned for you.",
+      "particles": [
+        "🌿",
+        "✨"
+      ],
+      "bg": "#FAF6EE",
+      "features": [
+        [
+          "📖",
+          "Sabaq, Sabqi, Manzil",
+          "New ayat, recent revision and old revision every day."
+        ],
+        [
+          "🙈",
+          "Hide words",
+          "Test yourself with hidden words or first letters."
+        ],
+        [
+          "🎧",
+          "Loop and slow down",
+          "Repeat each ayah 3, 5, 10 times or forever, at 0.75x."
+        ],
+        [
+          "🎙️",
+          "Record yourself",
+          "Listen to your recitation next to the reciter."
+        ],
+        [
+          "🌙",
+          "Ramadan mode",
+          "Suhoor and iftar for your city and a 30-day khatam."
+        ],
+        [
+          "🌍",
+          "Eight languages",
+          "English, Deutsch, Français, Español, 日本語, Português, 한국어, 繁體中文."
+        ]
+      ],
+      "steps": [
+        [
+          "Pick a surah",
+          "Start with Al-Mulk, Yasin, Juz Amma or any surah."
+        ],
+        [
+          "Learn a few ayat",
+          "Listen, loop, hide words, then tap Memorized."
+        ],
+        [
+          "Revise when asked",
+          "Zaytun plans your revision so nothing is lost."
+        ]
+      ],
+      "faq": [
+        [
+          "What is free and what is Premium?",
+          "Free: read all 114 surahs with the English meaning, listen, and Ramadan times. Premium: all memorization and revision tools, with a 7-day free trial."
+        ],
+        [
+          "Where does the Quran text come from?",
+          "The Uthmani text is from Tanzil.net, used exactly as published. The recitation is by Aaqib Azeez, released to the public domain on Wikimedia Commons."
+        ],
+        [
+          "Why is there no audio for some surahs?",
+          "We add recitation surah by surah after checking every ayah. Until then you can read and memorize those surahs."
+        ],
+        [
+          "How do I cancel my subscription?",
+          "<b>iPhone:</b> Settings → your name → Subscriptions → Zaytun → Cancel Subscription.<br><b>Android:</b> Google Play → profile icon → Payments &amp; subscriptions → Subscriptions → Zaytun → Cancel.<br>Cancel at least 24 hours before the end of the period to avoid the next charge. Deleting the app does not cancel the subscription."
+        ],
+        [
+          "I bought Premium but the app still asks me to pay.",
+          "Open Settings and tap <b>Restore</b>, using the same Apple ID or Google account you paid with. If that does not help, email us."
+        ],
+        [
+          "How do I get a refund?",
+          "Payments are handled by Apple and Google, so refunds are too. iPhone: <a href=\"https://reportaproblem.apple.com\">reportaproblem.apple.com</a>. Android: Google Play → Payments &amp; subscriptions → Budget &amp; history, or the Google Play Help Center."
+        ],
+        [
+          "How do I delete my data?",
+          "Zaytun → Settings → Delete all data, or delete the app. Your progress is only on your phone; we have no account for you."
+        ]
+      ],
+      "shots": 6,
+      "dark_shots": false
+    },
+    {
+      "slug": "alif-garden",
+      "name": "Alif Garden",
+      "title": "Alif Garden: Quran for Kids",
+      "description": "Alif Garden teaches children aged 4 to 8 the Arabic letters and short surahs through gentle games, with a garden that grows. No ads, no data.",
+      "category": "EducationalApplication",
+      "pkg": "com.alauddin.alifgarden",
+      "status": "soon",
+      "tagline": "Arabic letters and short surahs for kids, through happy games.",
+      "highlights": [
+        "🎈 4 gentle games",
+        "🌳 A garden that grows",
+        "🔒 No ads, no data"
+      ],
+      "color": "#FF8A3D",
+      "color2": "#2EC4B6",
+      "tag": "Learn, play, grow",
+      "lead": "Kids pop balloons, trace letters, find pairs and put short surahs in order. Every star grows their garden.",
+      "particles": [
+        "🌷",
+        "⭐"
+      ],
+      "bg": "#FFF6E0",
+      "features": [
+        [
+          "🎈",
+          "Pop the letter",
+          "Hear a letter, pop the right balloon."
+        ],
+        [
+          "✏️",
+          "Trace",
+          "Draw each letter with a finger; the app checks it."
+        ],
+        [
+          "🃏",
+          "Find pairs",
+          "A memory game with letters."
+        ],
+        [
+          "📖",
+          "Ayat in order",
+          "Put a short surah together and hear it recited."
+        ],
+        [
+          "🌳",
+          "A garden that grows",
+          "Stars plant flowers, trees and animals."
+        ],
+        [
+          "👨‍👩‍👧",
+          "For parents",
+          "Weekly report, up to 3 children, one price for the family."
+        ]
+      ],
+      "steps": [
+        [
+          "A grown-up sets up",
+          "Your child's name and what to learn."
+        ],
+        [
+          "Your child plays",
+          "Two or three minutes a day is enough."
+        ],
+        [
+          "Watch the garden grow",
+          "And read the Friday report."
+        ]
+      ],
+      "faq": [
+        [
+          "Is it safe for my child?",
+          "Yes. No ads, no links out, no account and no data collected. Purchases and settings are behind a grown-up question."
+        ],
+        [
+          "What is free and what is Premium?",
+          "Free: the first 5 letters, Al-Fatiha and Al-Ikhlas, part of the garden. Premium: all 28 letters, short vowels, 10 short surahs, the full garden, 3 children and the weekly report, with a 7-day free trial."
+        ],
+        [
+          "Where do the sounds come from?",
+          "Letter names use your phone's own Arabic voice. Surahs are recited by Aaqib Azeez (public domain). The Quran text is from Tanzil.net, used exactly as published."
+        ],
+        [
+          "How do I cancel my subscription?",
+          "<b>iPhone:</b> Settings → your name → Subscriptions → Alif Garden → Cancel Subscription.<br><b>Android:</b> Google Play → profile icon → Payments &amp; subscriptions → Subscriptions → Alif Garden → Cancel.<br>Cancel at least 24 hours before the end of the period to avoid the next charge. Deleting the app does not cancel the subscription."
+        ],
+        [
+          "I bought Premium but the app still asks me to pay.",
+          "Open Settings and tap <b>Restore</b>, using the same Apple ID or Google account you paid with. If that does not help, email us."
+        ],
+        [
+          "How do I get a refund?",
+          "Payments are handled by Apple and Google, so refunds are too. iPhone: <a href=\"https://reportaproblem.apple.com\">reportaproblem.apple.com</a>. Android: Google Play → Payments &amp; subscriptions → Budget &amp; history, or the Google Play Help Center."
+        ],
+        [
+          "How do I delete my data?",
+          "Open Grown-ups → Delete all data, or delete the app. Everything is only on your phone."
+        ]
+      ],
+      "shots": 6,
+      "dark_shots": false
     }
   ]
 }
