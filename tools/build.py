@@ -33,6 +33,9 @@ PLAY_ICON = (
     '<path d="M4 2.5L14 12l3.2-3.1L5.4 2.2c-.5-.3-1-.2-1.4.3z" fill="#fff" opacity=".85"/>'
     '<path d="M4 21.5c.4.5.9.6 1.4.3l11.8-6.7L14 12z" fill="#fff" opacity=".6"/></svg>'
 )
+APPLE_ICON = (
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.4 12.6c0-2.5 2-3.7 2.1-3.8-1.2-1.7-3-1.9-3.6-2-1.5-.2-3 .9-3.8.9-.8 0-2-.9-3.3-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.9 1.2 1.9 2.6 3.2 2.6 1.3-.1 1.8-.8 3.3-.8s2 .8 3.3.8c1.4 0 2.3-1.3 3.1-2.5 1-1.4 1.4-2.8 1.4-2.9 0 0-2.7-1-2.8-4.2zM14 5.2c.7-.8 1.2-2 1-3.2-1 .1-2.2.7-2.9 1.5-.6.7-1.2 1.9-1 3.1 1.1.1 2.2-.6 2.9-1.4z"/></svg>'
+)
 CHROME_ICON = (
     '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#DB4437"/>'
     '<path d="M20.66 7A10 10 0 0 1 12 22l4.33-7.5A5 5 0 0 0 16.33 9.5 5 5 0 0 0 12 7z" fill="#FFCD40"/>'
@@ -460,10 +463,16 @@ def build_app_page(a):
     slug = a["slug"]
     url = f"{STUDIO_URL}{slug}/"
     prefix = "../"
-    if a["status"] == "live":
-        cta = f'<a class="btn" href="{play_url(a)}" target="_blank" rel="noopener">{PLAY_ICON} Get it on Google Play</a>'
+    # Android: the store page once live, else the Play test link (only testers on the list can install from it).
+    android = play_url(a) if a["status"] == "live" else a.get("test_link")
+    if android:
+        cta = f'<a class="btn" href="{android}" target="_blank" rel="noopener">{PLAY_ICON} Download for Android</a>'
     else:
-        cta = '<span class="btn ghost disabled">🌱 Coming soon</span>'
+        cta = '<span class="btn ghost disabled">🌱 Android coming soon</span>'
+    if a.get("ios"):
+        cta += f'<a class="btn" href="https://apps.apple.com/app/id{a["ios"]}" target="_blank" rel="noopener">{APPLE_ICON} Download for iPhone</a>'
+    else:
+        cta += f'<span class="btn ghost disabled">{APPLE_ICON} iPhone coming soon</span>'
     features = "".join(
         f'<div class="feat reveal" style="--d:{i * 0.07:.2f}s"><span class="feat-ic">{ic}</span><b>{E(t)}</b><span>{E(x)}</span></div>'
         for i, (ic, t, x) in enumerate(a["features"])
@@ -519,7 +528,7 @@ def build_app_page(a):
         <h1>{E(a['name'])}</h1>
         <p class="app-tag">{E(a['tag'])}</p>
         <p>{E(a['lead'])}</p>
-        <div class="cta-row">{cta}<a class="btn ghost" href="#features">See what it does</a></div>
+        <div class="cta-row">{cta}</div>
       </div>
       <div class="hero-visual"><div class="phone tall"><img src="shots/1.jpg" alt="{E(a['name'])} screenshot" width="432" height="970"></div></div>
     </section>
