@@ -17,6 +17,8 @@ BASE = SITE["policy_base"]
 STUDIO_URL = BASE
 # The studio home shows these games first; the rest keep their order after them.
 STUDIO_GAMES = sorted(GAMES, key=lambda g: SITE["studio_first"].index(g["slug"]) if g["slug"] in SITE["studio_first"] else len(GAMES))
+# Apps earn the most, so the home page shows them first, in release order.
+STUDIO_APPS = sorted(APPS, key=lambda a: SITE.get("apps_first", []).index(a["slug"]) if a["slug"] in SITE.get("apps_first", []) else len(APPS))
 E = html.escape
 # Changes whenever the CSS/JS changes, so browsers never mix a new page with an old cached file.
 VER = hashlib.md5(b"".join((ROOT / "assets" / f).read_bytes() for f in ("style.css", "app.js"))).hexdigest()[:8]
@@ -376,63 +378,63 @@ def build_studio():
         studio_card(g, f"{g['slug']}/", f"assets/icons/{g['slug']}.png", i, [f"{f[0]} {f[1]}" for f in g["features"][:3]])
         for i, g in enumerate(STUDIO_GAMES)
     ]
-    app_cards = [studio_card(a, f"{a['slug']}/", f"{a['slug']}/icon.png", i, a["highlights"]) for i, a in enumerate(APPS)]
+    app_cards = [studio_card(a, f"{a['slug']}/", f"{a['slug']}/icon.png", i, a["highlights"]) for i, a in enumerate(STUDIO_APPS)]
     any_live = any(g["status"] == "live" for g in GAMES + APPS)
     store_note = "Find them on Google Play, with more on the way." if any_live else "Coming soon to Google Play and the App Store."
-    icons = [(f"assets/icons/{g['slug']}.png", g["name"]) for g in GAMES[:4]] + [(f"{a['slug']}/icon.png", a["name"]) for a in APPS[:2]]
+    icons = [(f"{a['slug']}/icon.png", a["name"]) for a in STUDIO_APPS[:4]] + [(f"assets/icons/{g['slug']}.png", g["name"]) for g in STUDIO_GAMES[:2]]
     collage = "".join(f'<img class="ci ci{i}" src="{src}" alt="{E(name)}" width="256" height="256">' for i, (src, name) in enumerate(icons))
     legal = "".join(
+        f'<div><b>{E(a["name"])}</b><a href="{a["slug"]}/privacy.html">Privacy</a><a href="{a["slug"]}/">Support</a></div>'
+        for a in STUDIO_APPS
+    ) + "".join(
         f'<div><b>{E(g["name"])}</b><a href="{g["policy"]}privacy.html">Privacy</a><a href="{g["policy"]}support.html">Support</a></div>'
         for g in STUDIO_GAMES
-    ) + "".join(
-        f'<div><b>{E(a["name"])}</b><a href="{a["slug"]}/privacy.html">Privacy</a><a href="{a["slug"]}/">Support</a></div>'
-        for a in APPS
     )
     game_links = "".join(f'<a href="{g["slug"]}/">{E(g["name"])}</a>' for g in STUDIO_GAMES)
-    app_links = "".join(f'<a href="{a["slug"]}/">{E(a["name"])}</a>' for a in APPS)
+    app_links = "".join(f'<a href="{a["slug"]}/">{E(a["name"])}</a>' for a in STUDIO_APPS)
     social = "".join(f'<a href="{url}" target="_blank" rel="noopener">{E(label)}</a>' for label, url in SITE["social"]["links"])
     links = f"""<div class="foot-cols">
-        <div><b>Games</b>{game_links}</div>
         <div><b>Apps</b>{app_links}</div>
+        <div><b>Games</b>{game_links}</div>
         <div><b>Studio</b><a href="#about">About us</a><a href="#contact">Contact</a></div>
         <div><b>{E(SITE["social"]["title"])}</b>{social}</div>
       </div>
       <details class="legal"><summary>Privacy and support</summary><div class="legal-rows">{legal}</div></details>"""
-    desc = "Alauddin Studio makes cozy games and useful apps for Android and iPhone."
+    desc = "Alauddin Studio makes useful apps and cozy games for Android and iPhone."
     extra = '\n  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">' + ld({
         "@context": "https://schema.org", "@type": "Organization", "name": COMPANY, "url": STUDIO_URL,
         "logo": STUDIO_URL + "assets/logo-512.png", "email": SITE["email"],
     })
-    page = f"""{head(COMPANY + ": cozy games and useful apps", desc, STUDIO_URL + "assets/og.png", STUDIO_URL, "", "#EEF5FF", extra)}
+    page = f"""{head(COMPANY + ": useful apps and cozy games", desc, STUDIO_URL + "assets/og.png", STUDIO_URL, "", "#EEF5FF", extra)}
 <body class="studio">
 {backdrop()}
   <div class="wrap">
-{topbar("", '<a href="#games">Games</a><a href="#apps">Apps</a><a href="#contact">Contact</a>', COMPANY, studio_mark())}
+{topbar("", '<a href="#apps">Apps</a><a href="#games">Games</a><a href="#contact">Contact</a>', COMPANY, studio_mark())}
 
     <section class="hero home-hero studio-hero">
       <div class="hero-text">
         <span class="pill"><span class="dot"></span> Little ideas, a touch of magic</span>
-        <h1>Games and apps, made with <span class="rainbow">care</span></h1>
-        <p>{COMPANY} makes cozy games and useful apps for Android and iPhone.</p>
+        <h1>Apps and games, made with <span class="rainbow">care</span></h1>
+        <p>{COMPANY} makes useful apps and cozy games for Android and iPhone.</p>
         <div class="cta-row">
-          <a class="btn" href="#games">See the games</a>
-          <a class="btn ghost" href="#apps">See the apps</a>
+          <a class="btn" href="#apps">See the apps</a>
+          <a class="btn ghost" href="#games">See the games</a>
         </div>
       </div>
       <div class="collage" aria-hidden="true">{collage}</div>
     </section>
 
-    <section id="games">
-      <div class="section-head reveal"><span class="eyebrow">Our games</span><h2>Cozy worlds to relax in</h2><p>Gentle idle and merge games you can enjoy at your own pace. {store_note}</p></div>
-      <div class="grid">
-{chr(10).join(game_cards)}
+    <section id="apps">
+      <div class="section-head reveal"><span class="eyebrow">Our apps</span><h2>Useful little helpers</h2><p>Simple apps that each solve one everyday problem. {store_note}</p></div>
+      <div class="grid center">
+{chr(10).join(app_cards)}
       </div>
     </section>
 
-    <section id="apps">
-      <div class="section-head reveal"><span class="eyebrow">Our apps</span><h2>Useful little helpers</h2><p>Simple apps that each solve one everyday problem.</p></div>
-      <div class="grid center">
-{chr(10).join(app_cards)}
+    <section id="games">
+      <div class="section-head reveal"><span class="eyebrow">Our games</span><h2>Cozy worlds to relax in</h2><p>Gentle idle and merge games you can enjoy at your own pace.</p></div>
+      <div class="grid">
+{chr(10).join(game_cards)}
       </div>
     </section>
 
