@@ -1,16 +1,17 @@
 {
-  "_help": "status: testing | live | soon. After editing run: python tools/build.py. It also builds the Alauddin Studio home from games and apps. App pages are built from the apps list too. Apps: test_link = Play test opt-in link (Download for Android before live); ios = App Store numeric ID.",
+  "_help": "status: testing | live | soon. After editing run: python tools/build.py. It also builds the Alauddin Studio home from games and apps. App pages are built from the apps list too. Apps: test_link = Play test opt-in link (Download for Android before live); ios = App Store numeric ID. site.studio_first / site.apps_first set the order on the home page (release order).",
   "site": {
     "company": "Alauddin Studio",
     "email": "hello@alauddinstudio.com",
     "policy_base": "https://alauddinstudio.com/",
     "studio_first": [
       "honeybee",
-      "sheep",
       "petsalon",
-      "wooltree",
+      "bakery",
+      "sheep",
       "flower",
-      "bakery"
+      "caravan",
+      "wooltree"
     ],
     "social": {
       "title": "Follow Leafcure",
@@ -28,7 +29,14 @@
           "https://www.youtube.com/@leafcureapp"
         ]
       ]
-    }
+    },
+    "apps_first": [
+      "leafcure",
+      "alif-garden",
+      "kinring",
+      "zaytun",
+      "paincast"
+    ]
   },
   "games": [
     {
@@ -276,6 +284,47 @@
         "✨"
       ],
       "video": true
+    },
+    {
+      "slug": "caravan",
+      "name": "Tiny Caravan",
+      "title": "Tiny Caravan: Road Trip Game",
+      "pkg": "com.alauddin.tinycaravan",
+      "status": "soon",
+      "tagline": "A cozy road trip game for car, bus and train rides.",
+      "intro": "Tiny Caravan rides with you on real trips. You are the passenger, your little food caravan does the work. Every town, river and traffic jam you pass becomes play.",
+      "features": [
+        [
+          "🗺️",
+          "Real trips, real places",
+          "New towns give coins, new districts and states give stamps."
+        ],
+        [
+          "🎣",
+          "Fish in real rivers",
+          "Crossing a river? Cast your net and catch local fish."
+        ],
+        [
+          "🍲",
+          "Jam pot",
+          "Stuck in traffic? The pot cooks. Longer jam, bigger meal."
+        ],
+        [
+          "🚐",
+          "Cart to camper",
+          "Grow your food caravan and take a cat, dog or bird along."
+        ]
+      ],
+      "shots": 0,
+      "policy": "tiny-caravan/",
+      "color": "#E86A3A",
+      "color2": "#FFC56B",
+      "particles": [
+        "🚐",
+        "🗺️",
+        "🌅"
+      ],
+      "video": false
     }
   ],
   "apps": [
