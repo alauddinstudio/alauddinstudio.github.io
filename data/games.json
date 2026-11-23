@@ -44,7 +44,7 @@
       "name": "Honey Bee Idle",
       "title": "Honey Bee Idle: Sweet Tycoon",
       "pkg": "com.alauddin.honeybeeidle",
-      "status": "soon",
+      "status": "live",
       "tagline": "Keep bees, make honey and grow a sunny meadow farm.",
       "intro": "Grandpa Bramble, the old beekeeper, hands you his hives. Walk little Honey the bear cub around the farm, collect honeycomb from the bees and turn it into honey jars, candles and pretty gift boxes.",
       "features": [
@@ -85,7 +85,7 @@
       "name": "Cozy Bakery Idle",
       "title": "Cozy Bakery Idle: Cake Tycoon",
       "pkg": "com.alauddin.cozybakeryidle",
-      "status": "soon",
+      "status": "live",
       "tagline": "Bake bread and cakes and serve woodland customers.",
       "intro": "Nana Nutmeg, the old baker cat, hands you the keys to a little autumn bakery. Walk Biscuit the cat around the island, collect wheat from the hamsters and bake it into treats your customers love.",
       "features": [
@@ -167,7 +167,7 @@
       "name": "Pet Salon Idle",
       "title": "Pet Salon Idle: Cozy Groom",
       "pkg": "com.alauddin.petsalon",
-      "status": "soon",
+      "status": "live",
       "tagline": "Wash, groom and style cute pets in a cozy salon.",
       "intro": "Auntie Clover's salon has been shut for years, and every pet in town misses it. Help Mochi the corgi open it again and turn the little salon into the finest spa in town.",
       "features": [
@@ -208,7 +208,7 @@
       "name": "Sheep Merge",
       "title": "Sheep Merge: Cozy Wool Farm",
       "pkg": "com.alauddin.sheepmerge",
-      "status": "soon",
+      "status": "live",
       "tagline": "Merge fluffy sheep and knit for a snowy village.",
       "intro": "The village is all snowed in and the villagers need warm things. Help Granny Purl grow sheep, gather their wool, knit cozy clothes and bring the village back to life.",
       "features": [
@@ -249,7 +249,7 @@
       "name": "Wool Tree Idle",
       "title": "Wool Tree Idle: Silk Tycoon",
       "pkg": "com.alauddin.wooltreeidle",
-      "status": "soon",
+      "status": "live",
       "tagline": "Grow silkworms, knit sweaters and build a winter wool farm.",
       "intro": "Play as a little lamb, Granny Fluff's grandchild. Grow magical mulberry trees, let busy silkworms spin wool, and turn it into sweaters, yarn, fabric and clothes.",
       "features": [
@@ -335,7 +335,7 @@
       "description": "Leafcure is an AI plant doctor. Snap a sick leaf to identify the plant, find the disease or pest, and get step-by-step treatment.",
       "category": "LifestyleApplication",
       "pkg": "com.alauddin.plantdoctor",
-      "status": "soon",
+      "status": "live",
       "tagline": "Your AI plant doctor. Snap a sick leaf to find the problem and get step-by-step treatment.",
       "highlights": [
         "📷 Snap a leaf",
@@ -440,7 +440,7 @@
       "description": "Paincast warns you 24–48 hours before big air pressure changes and keeps a simple pain diary, so you can plan around the weather.",
       "category": "WeatherApplication",
       "pkg": "com.alauddin.paincast",
-      "status": "soon",
+      "status": "live",
       "tagline": "Air pressure alerts 24–48 hours ahead, with a simple pain diary that stays on your phone.",
       "highlights": [
         "🌦️ Pressure alerts",
@@ -546,7 +546,7 @@
       "description": "Kinring is a daily reminder to make time for your family. See who needs your time today, with one small idea for each person.",
       "category": "LifestyleApplication",
       "pkg": "com.alauddin.kinring",
-      "status": "soon",
+      "status": "live",
       "tagline": "A daily nudge to call Mom, text your brother and play with your kids.",
       "highlights": [
         "📞 Who needs you today",
@@ -651,7 +651,7 @@
       "description": "Zaytun helps you memorize the Quran the madrasa way: Sabaq, Sabqi and Manzil, a few ayat a day, offline and without ads.",
       "category": "EducationApplication",
       "pkg": "com.alauddin.zaytun",
-      "status": "soon",
+      "status": "live",
       "tagline": "Memorize the Quran a few ayat a day, and never forget them.",
       "highlights": [
         "📖 Sabaq, Sabqi, Manzil",
