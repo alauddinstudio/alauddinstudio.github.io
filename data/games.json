@@ -290,7 +290,7 @@
       "name": "Tiny Caravan",
       "title": "Tiny Caravan: Road Trip Game",
       "pkg": "com.alauddin.tinycaravan",
-      "status": "soon",
+      "status": "live",
       "tagline": "A cozy road trip game for car, bus and train rides.",
       "intro": "Tiny Caravan rides with you on real trips. You are the passenger, your little food caravan does the work. Every town, river and traffic jam you pass becomes play.",
       "features": [
@@ -315,7 +315,7 @@
           "Grow your food caravan and take a cat, dog or bird along."
         ]
       ],
-      "shots": 0,
+      "shots": 6,
       "policy": "tiny-caravan/",
       "color": "#E86A3A",
       "color2": "#FFC56B",
@@ -754,7 +754,7 @@
       "description": "Alif Garden teaches children aged 4 to 8 the Arabic letters and short surahs through gentle games, with a garden that grows. No ads, no data.",
       "category": "EducationalApplication",
       "pkg": "com.alauddin.alifgarden",
-      "status": "soon",
+      "status": "live",
       "tagline": "Arabic letters and short surahs for kids, through happy games.",
       "highlights": [
         "🎈 4 gentle games",
