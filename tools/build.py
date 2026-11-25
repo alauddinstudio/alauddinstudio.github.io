@@ -24,7 +24,7 @@ E = html.escape
 VER = hashlib.md5(b"".join((ROOT / "assets" / f).read_bytes() for f in ("style.css", "app.js"))).hexdigest()[:8]
 
 STATUS = {
-    "live": ("On Google Play", "live"),
+    "live": ("Live", "live"),
     "testing": ("In testing", "testing"),
     "soon": ("Coming soon", "soon"),
 }
@@ -227,12 +227,18 @@ def build_game(g):
     others = [o for o in GAMES if o is not g]
 
     if status == "live":
-        cta = f'<a class="btn" href="{play_url(g)}" target="_blank" rel="noopener">{PLAY_ICON} Get it on Google Play</a>'
+        # Android on Google Play now; iPhone waits for the App Store ("ios" = Apple ID).
+        cta = f'<a class="btn" href="{play_url(g)}" target="_blank" rel="noopener">{PLAY_ICON} Download on Google Play</a>'
+        if g.get("ios"):
+            cta += f'<a class="btn" href="https://apps.apple.com/app/id{g["ios"]}" target="_blank" rel="noopener">{APPLE_ICON} Download for iPhone</a>'
+        else:
+            cta += f'<span class="btn ghost disabled">{APPLE_ICON} iPhone coming soon</span>'
     elif status == "testing":
         cta = '<a class="btn" href="#test">✨ Become a tester</a>'
     else:
         cta = '<span class="btn ghost disabled">🌱 Coming soon</span>'
-    more = '<a class="btn ghost" href="#about">What\'s inside</a>'
+    # Live games already show two store buttons, so the third one stays off.
+    more = "" if status == "live" else '<a class="btn ghost" href="#about">What\'s inside</a>'
 
     if g.get("video"):
         # the store preview video, playing with its sound in the phone (app.js)
@@ -357,9 +363,9 @@ def build_game(g):
 
 
 def studio_card(g, href, icon, i, highlights):
-    """A live game or app sends people straight to Google Play; the rest open their own page as Coming soon."""
+    """Every card opens its own page (details, then the store buttons); only live ones say Live."""
     live = g["status"] == "live"
-    target = f'{play_url(g)}" target="_blank" rel="noopener' if live else href
+    target = href
     state = badge(g) if live else badge({"status": "soon"})
     label = STATUS[g["status"] if live else "soon"][0]
     chips = "".join(f"<li>{E(h)}</li>" for h in highlights)
@@ -368,7 +374,7 @@ def studio_card(g, href, icon, i, highlights):
         <h3 data-status="{E(label)}">{E(g['name'])}</h3>
         <p>{E(g['tagline'])}</p>
         <ul class="highlights">{chips}</ul>
-        <span class="go">{"Get it on Google Play" if live else "Explore"} →</span>
+        <span class="go">Explore →</span>
       </a>"""
 
 
