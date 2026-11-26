@@ -29,7 +29,7 @@
 <body>
 <main>
 <h1>Privacy Policy – Tiny Caravan</h1>
-<p class="date">Effective date: November 20, 2026</p>
+<p class="date">Effective date: November 26, 2026</p>
 
 <p>This Privacy Policy explains how the mobile game <strong>Tiny Caravan: Road Trip Game</strong> (the "Game") handles information. The Game is developed by <strong>Alauddin Studio</strong> ("we", "us"). By using the Game, you agree to this policy.</p>
 
@@ -39,16 +39,25 @@
   <li><strong>When:</strong> only after you tap <strong>Start ride</strong> and confirm you are a passenger. It stops when the ride ends. The Game never asks for "Always" location access.</li>
   <li><strong>In the background:</strong> if you put the phone away during a ride, the ride keeps counting. On iPhone you see the blue location indicator; on Android you see a notification ("Tiny Caravan is on the road").</li>
   <li><strong>What it is used for:</strong> counting kilometers, finding the towns, districts, regions and rivers you pass (from map data stored inside the Game), and drawing your route on the trip card, trip video and map poster.</li>
-  <li><strong>Where it goes:</strong> your route and places <strong>stay on your phone</strong>. We do not send them to our servers (we have none) and do not share or sell them. The Game works offline.</li>
+  <li><strong>Where it goes:</strong> your route and places <strong>stay on your phone</strong>. We do not send them to our servers and do not share or sell them. Not even the optional cloud save (section 2) contains your route, places or trip history. The Game works offline.</li>
   <li><strong>Searching for a place:</strong> when you type a place name in "Where to?", the words you type are sent to OpenStreetMap's Nominatim search service (run by the OpenStreetMap Foundation) to find matching places. Only the typed words are sent, plus the technical data any internet request has (such as your IP address). Your location and route are <strong>not</strong> sent. If you do not type a place, nothing is sent. See the <a href="https://osmfoundation.org/wiki/Privacy_Policy">OpenStreetMap privacy policy</a>.</li>
   <li><strong>Sharing:</strong> a trip video or map picture leaves your phone only if you tap Share and choose where to send it.</li>
-  <li><strong>Deleting:</strong> uninstalling the Game deletes all saved trips.</li>
+  <li><strong>Deleting:</strong> uninstalling the Game deletes all saved trips from your phone.</li>
 </ul>
 
-<h2>2. Other information</h2>
-<p>You play without any account. We do not ask for your name, email, phone number or address.</p>
+<h2>2. Account and cloud save (optional)</h2>
+<p>You can play the whole Game as a guest, without any account. We do not ask for your name, phone number or address.</p>
+<p>If you tap 👤 Account and sign in with Google, a copy of your game progress is also saved online, so you can keep playing on a new phone. For this we use <strong>Google Firebase</strong> (Firebase Authentication and Cloud Firestore), a service of Google.</p>
 <ul>
-  <li><strong>Game progress</strong> (coins, km, stamps, album, caravan, settings, test notes) is saved on your own device and never sent to us.</li>
+  <li><strong>What is stored:</strong> your account ID and email address from Google (in Firebase Authentication), and a copy of your progress: coins, total km, ride count, caravan level and choices (caravan, road, pet, paint), stickers, fish, cargo and upgrades, with a random device ID, the type of device (Android or iPhone) and the time of the last save (in Cloud Firestore). <strong>Not stored:</strong> your route, the places you passed, your trip history and your trip videos. We do not store your name or profile picture, and we never receive your Google password.</li>
+  <li><strong>Who can see it:</strong> only you (through the Game) and us, the developer. Google stores it for us on its servers, which may be outside your country. Read the <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase privacy information</a>.</li>
+  <li><strong>How long:</strong> until you delete your account. Signing out does not delete it.</li>
+  <li><strong>Deleting your account:</strong> in the Game, tap 👤 Account → <strong>Delete account</strong>. This deletes your account and your cloud save right away; the progress on your phone stays. You can also email us (section 10) from the email address of your account and we will delete it within 30 days.</li>
+</ul>
+<h3>Other information</h3>
+<ul>
+  <li><strong>Game statistics (Google Firebase Analytics):</strong> to balance the Game, it sends a few anonymous events about play: when a ride ends (only the rounded kilometers and coins earned, never a place or route), when a purchase is completed, when a reward video is watched, and when the Game asks you to rate it. Firebase Analytics also collects standard device and usage information, such as the app instance ID, device type, operating system, country and how often the Game is used. It does not receive your location.</li>
+  <li><strong>Game progress</strong> (coins, km, stamps, album, caravan, settings, test notes) is saved on your own device. It is sent to us only if you sign in and use the cloud save above.</li>
   <li><strong>Battery level</strong> is read during a ride for the optional test log on your phone. It is not sent anywhere.</li>
 </ul>
 
@@ -77,14 +86,15 @@
   <li><strong>Location:</strong> you can deny or turn off location for the Game in your device settings at any time. You can still play the Demo ride and use the home base, shop and album.</li>
   <li><strong>iPhone / iPad:</strong> Settings → Privacy &amp; Security → Tracking, to allow or stop tracking.</li>
   <li><strong>Android:</strong> Settings → Google → Ads, to reset or delete your advertising ID.</li>
+  <li>You can play without an account, sign out at any time (👤 Account → Sign out), or delete your account and cloud save (👤 Account → Delete account).</li>
   <li>You can delete all Game data on your phone by uninstalling the Game.</li>
 </ul>
 
 <h2>8. Data security</h2>
-<p>We do not run our own servers. Your trips and progress stay on your device; the only thing we send out is the place name you type into the destination search. Third-party services (Google, Apple) protect data according to their own policies.</p>
+<p>We do not run our own servers. Your trips stay on your device. What leaves it: the place name you type into the destination search, game statistics (section 2), and, only if you sign in, your progress and email address. Cloud saves are stored in Google Firebase over encrypted connections, and security rules allow each player to read and change only their own save. Third-party services (Google, Apple) protect data according to their own policies.</p>
 
 <h2>9. Changes to this policy</h2>
-<p>We may update this Privacy Policy from time to time, for example if we add an optional cloud save. Changes will be posted on this page with a new effective date.</p>
+<p>We may update this Privacy Policy from time to time, for example if we add new features. Changes will be posted on this page with a new effective date.</p>
 
 <h2>10. Contact us</h2>
 <p>If you have any questions about this Privacy Policy, please contact:<br>
